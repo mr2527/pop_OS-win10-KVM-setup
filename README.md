@@ -18,8 +18,10 @@ I spent nearly a week sifting through various guides getting this to environment
 
 Please consider checking out these guides to find out where I was able to get my information from. I highly suggest it. The information is great.
 
+With that being said, this guide will pull things from both guides and any others will be referenced appropriately.
+
 <h4 name="Bryan's Guide">
-  Bryan's Guide
+  Bryan's Guide:
 </h4>
 
 [Bryan Steiner (bryansteiner)](https://github.com/bryansteiner)
@@ -27,7 +29,7 @@ Please consider checking out these guides to find out where I was able to get my
 [Bryan's Guide](https://github.com/bryansteiner/gpu-passthrough-tutorial)
 
 <h4 name="Aarons's Guide">
-  Aarons's Guide
+  Aarons's Guide:
 </h4>
 
 [Aaron Anderson](https://github.com/aaronanderson)
@@ -48,16 +50,25 @@ Now here is a breakdown of my exact PC Setup. Please be aware that **there are d
 - Motherboard:
     - [ROG Crosshair VIII Hero](https://rog.asus.com/us/motherboards/rog-crosshair/rog-crosshair-viii-hero-model/)
 - GPUs:
-    - EVGA GTX 1080 Ti FTW3  (Host, I.e, pop_OS) - PCIe slot 1
-    - EVGA RTX 3070 XC3 Ultra (Guest, I.e, KVM) - PCIe slot 2
+    - [EVGA GTX 1080 Ti FTW3](https://www.evga.com/products/specs/gpu.aspx?pn=1190fbf7-7f11-465d-b303-cab0e50fbdc6)  (Host, I.e, pop_OS) - PCIe slot 1
+    - [EVGA RTX 3070 XC3 Ultra](https://www.evga.com/products/product.aspx?pn=08G-P5-3755-KR) (Guest, I.e, KVM) - PCIe slot 2
 - Memory:
-    - G.Skill Trident Neo DDR4 3600 MHz 32GB (4x8)
+    - [G.Skill Trident Neo](https://www.gskill.com/product/165/326/1562839388/F4-3600C16Q-32GTZNTrident-Z-NeoDDR4-3600MHz-CL16-16-16-36-1.35V32GB-(4x8GB)) DDR4 3600 MHz 32GB (4x8)
 - Disk:
-    - Samsung 970 EVO Plus 500GB - M.2 NVMe (Passthrough)
-    - Samsung 860 PRO 2 TB - SSD (Passthrough)
-    - WD Black NVME 500GB - M.2 NVMe (Passthrough)
-    - WD Blue 500 GB - SSD (Linux Host and qcow2 storage for windows 10 KVM)
-    - ADATA SSD 1TB - SSD (Passthrough)
+    - [Samsung 970 EVO Plus 500GB](https://www.amazon.com/Samsung-970-EVO-Plus-MZ-V7S1T0B/dp/B07MFZY2F2) - M.2 NVMe (Passthrough)
+    - [Samsung 860 PRO 2 TB](https://www.amazon.com/Samsung-512GB-V-NAND-Solid-MZ-76P512BW/dp/B07879KC15/ref=sr_1_2?dchild=1&keywords=860%2Bpro&qid=1613689682&s=electronics&sr=1-2&th=1) - SSD (Passthrough)
+    - [WD Black NVME 500GB](https://shop.westerndigital.com/products/internal-drives/wd-black-sn750-nvme-ssd#WDS250G3X0C) - M.2 NVMe (Passthrough)
+    - [WD Blue 500 GB - SSD](https://shop.westerndigital.com/products/internal-drives/wd-blue-sata-2-5-ssd#WDS500G2B0A) (Linux Host and qcow2 storage for windows 10 KVM)
+    - [ADATA SSD 1TB - SSD](https://www.amazon.com/ADATA-Ultimate-Su800-Internal-ASU800SS-1TT-C/dp/B01K8A29E6) (Passthrough)
+
+<h3 name="hardware_requirements">
+  Hardware Requirements
+</h3>
+
+* Two graphics cards. (One for host system. One for guest system (passthrough))
+* [Hardware that can support IOMMU](https://en.wikipedia.org/wiki/List_of_IOMMU-supporting_hardware) (Please read before proceeding).
+* A monitor with more than one input or more than one monitor (Will be discussed later).
+
 
 <h2 name="tutorial">
     Tutorial
