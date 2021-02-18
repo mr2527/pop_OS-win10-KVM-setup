@@ -1,6 +1,7 @@
 # pop_OS-win10-KVM-setup
-This is a repo that contains a repo and the necessary files to create a working pop_OS -> windows 10 KVM.
+This is a repo that contains a tutorial and the necessary files to create a working Pop!\_OS 20.10 x86_64 -> windows 10 KVM.
 
+  ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/pop_Neofetch.png)
 
 <h2 name="introduction">
   Introduction
@@ -32,7 +33,7 @@ With that being said, this guide will pull things from both guides and any other
   Aarons's Guide:
 </h4>
 
-[Aaron Anderson](https://github.com/aaronanderson)
+[Aaron Anderson (aaronanderson)](https://github.com/aaronanderson)
 
 [Aaron's Guide](https://github.com/aaronanderson/LinuxVMWindowsSteamVR)
 
@@ -50,7 +51,7 @@ Now here is a breakdown of my exact PC Setup. Please be aware that **there are d
 - Motherboard:
     - [ROG Crosshair VIII Hero](https://rog.asus.com/us/motherboards/rog-crosshair/rog-crosshair-viii-hero-model/)
 - GPUs:
-    - [EVGA GTX 1080 Ti FTW3](https://www.evga.com/products/specs/gpu.aspx?pn=1190fbf7-7f11-465d-b303-cab0e50fbdc6)  (Host, I.e, pop_OS) - PCIe slot 1
+    - [EVGA GTX 1080 Ti FTW3](https://www.evga.com/products/specs/gpu.aspx?pn=1190fbf7-7f11-465d-b303-cab0e50fbdc6)  (Host, I.e, Pop!\_OS) - PCIe slot 1
     - [EVGA RTX 3070 XC3 Ultra](https://www.evga.com/products/product.aspx?pn=08G-P5-3755-KR) (Guest, I.e, KVM) - PCIe slot 2
 - Memory:
     - [G.Skill Trident Neo](https://www.gskill.com/product/165/326/1562839388/F4-3600C16Q-32GTZNTrident-Z-NeoDDR4-3600MHz-CL16-16-16-36-1.35V32GB-(4x8GB)) DDR4 3600 MHz 32GB (4x8)
