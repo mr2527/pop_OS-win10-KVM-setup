@@ -159,10 +159,10 @@ Since we are going to be creating a *Windows* kvm, you need the ISO for it. [Get
 
 You don't *need* the Vulkan Drivers but if you want the best performance you can get on the host if it uses an AMD GPU I highly suggest this. Ubuntu comes with `mesa-vulkan-drivers` which offer comparable or better performance but you can get the AMD Vulkan drivers here:
 ```
-sudo wget -qO - http://repo.radeon.com/amdvlk/apt/debian/amdvlk.gpg.key | sudo apt-key add -
-sudo sh -c 'echo deb [arch=amd64] http://repo.radeon.com/amdvlk/apt/debian/ bionic main > /etc/apt/sources.list.d/amdvlk.list'
-sudo apt update
-sudo apt-get install amdvlk
+$ sudo wget -qO - http://repo.radeon.com/amdvlk/apt/debian/amdvlk.gpg.key | sudo apt-key add -
+$ sudo sh -c 'echo deb [arch=amd64] http://repo.radeon.com/amdvlk/apt/debian/ bionic main > /etc/apt/sources.list.d/amdvlk.list'
+$ sudo apt update
+$ sudo apt-get install amdvlk
 ```
 
 5. Install the following packages (***MANDATORY***)
@@ -274,8 +274,7 @@ Since I did not need that part I will be skipping it. The next steps are applica
 <h2 name="VM logistics">
 ***OPTIONAL*** VM Dynamic Binding
 </h2>
-How: Libvirt has a hook [ibvirt hooks](https://libvirt.org/hooks.html) system that grants you access to running commands on startup or shutdown of the VM. The scripts that are located within the directory `/etc/libvirt/hooks`. If the directory cannot be found or does not exist, create it. 
-]
+How: Libvirt has a hook [Libvirt hooks](https://libvirt.org/hooks.html) system that grants you access to running commands on startup or shutdown of the VM. The scripts that are located within the directory `/etc/libvirt/hooks`. If the directory cannot be found or does not exist, create it. 
 
 ```
 $ sudo mkdir /etc/libvirt/hooks
@@ -390,28 +389,26 @@ Once you are here we can begin the construction of our VM. If you are a new user
 
 You can now start [Virt-Manager](https://virt-manager.org/), you will be presented with this screen:
 
-  ![alt text]()
+  ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/virt1.png)
 
 Click on the screen with yellow light icon or navigate to `File > Add Connection`. You will be presented with this screen. Choose `Local install media (ISO image or CDROM)` and select `Forward`. You will then see:
 
-  ![alt text]()
+  ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/virt2.png)
 
 Remember those ISOs we installed earlier? We are going to need them now. I store them on my `Desktop/`. Store them wherever you want and navigate to that installation location by selecting the `browse` button. Choose the Win10 ISO. The `Choose the operating system you are installing:` section should now autocomplete. Keep the button checked and continue `Forward`. You will be presented with:
 
-  ![alt text]()
+  ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/virt3.png)
 
 You will now configure your Memory (RAM) and CPU settings. In my case, I will designate 16GB of ram for now (16384) and since I have a 12c/24t CPU, I will pass in all 12 cores. Proceed `Forward` and be met with:
 
-  ![alt text]()
+  ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/virt4.png)
 
 In this case you will be creating a custom storage for the Windows install. Select `Enable storage for this virtual machine` and then `Select or create custom storage` and then navigate the Storage Volume menu and create a storage volume with any size above 50GB. In this case you want to create a storage volume with any name you would like and with a format of `qcow2` the rest doesn't matter. It can be stored wherever you like. Once created select it and proceed with `Choose Volume` and lastly go `Forward`. 
 
-  ![alt text]()
+  ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/virt6.png)
 
 ***NOTE***: I had a problem when I initially created this because I named it `win10`. I highly suggest NOT naming it this. Instead do `Windows10` if you really want. Lastly select `Customize configuration before install` and then `Finish`.
 
-  ![alt text]()
-
 A new window will now appear called `$VM_NAME on QEMU/KVM`. This will allow you to configure more advanced options. You can alter these options through GUI or libvirt XML settings. Please ensure that while on the `Overview` page under `Firmware` you select `UEFI x86_64: /usr/share/OVMF_CODE_4d.fd` and none of the other options.
 
-  ![alt text]()
+  ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/virt7.png)
