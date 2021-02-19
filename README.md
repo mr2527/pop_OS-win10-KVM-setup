@@ -16,7 +16,7 @@ If you are a seasoned UNIX/Linux/Related user, this may not be the guide for you
 
 This is a repo that contains a tutorial and the necessary scripts to create a working [Pop!\_OS 20.10 x86_64](https://pop.system76.com/) -> Windows 10 KVM.
 
-  ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/pop_Neofetch.png)
+  ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/pop_Neofetch.png)
   
 ^If you want **this** information then simply install [neofetch](https://github.com/dylanaraps/neofetch):
 ```
@@ -123,7 +123,7 @@ $ tree
 ```
 It will produce output like this:
 
-  ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/tree_example.png)
+  ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/tree_example.png)
 
 
 5. Basic Terminal commands. clear, ls, cd, mkdir, cp, etc.
@@ -151,7 +151,7 @@ Since this project is a KVM for Windows 10, you are required to download and use
 3. Download Windows 10 ISO files (***MANDATORY***)
 Since we are going to be creating a *Windows* kvm, you need the ISO for it. [Get the lastest Windows 10 ISO here](https://www.microsoft.com/en-us/software-download/windows10ISO)
 
-4.***OPTIONAL***:
+4. ***OPTIONAL***:
 
 <h4 name="AMD optional">
   If you own an AMD graphics card that you will be passing through:
@@ -195,7 +195,7 @@ $ sudo dmesg | grep AMD-Vi
 
 If you get output that looks like **this**, you should be ready.
 
-  ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/grep_AMD-Vi.png)
+  ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/grep_AMD-Vi.png)
   
 Once this is completed you will need to pass this hardware enabled IOMMU functionality into the kernel. You can read more about [kernel parameters here](https://wiki.archlinux.org/index.php/kernel_parameters). Depending on your boot-loader you will have to figure out how to do this yourself. For me, I can use [kernelstub](https://github.com/pop-os/kernelstub). Other people use grub, GRUB2 or rEFInd.
 
@@ -240,7 +240,7 @@ chmod +x ./iommu2.sh
 
 For AMD systems the output will look something like this:
 
-  ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/iommu2.png)
+  ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/iommu2.png)
 
 Pulled from [Bryan's guide](https://github.com/bryansteiner/gpu-passthrough-tutorial/blob/master/README.md), Intel output should look like.
 
@@ -314,7 +314,7 @@ Recognize the most important hooks
 
 I have named my VM "pop" for this example. My directory structure is:
 
-  ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/pop_tree_struct.png)
+  ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/pop_tree_struct.png)
 
 Now is when things get fun. Create a file named `kvm.conf`. My editor of choice is [vim](https://www.vim.org/). If you want to avoid problems when creating these files:
 ```
