@@ -54,7 +54,7 @@ Now here is a breakdown of my exact PC Setup. Please be aware that **there are d
     - [EVGA GTX 1080 Ti FTW3](https://www.evga.com/products/specs/gpu.aspx?pn=1190fbf7-7f11-465d-b303-cab0e50fbdc6)  (Host, I.e, Pop!\_OS) - PCIe slot 1
     - [EVGA RTX 3070 XC3 Ultra](https://www.evga.com/products/product.aspx?pn=08G-P5-3755-KR) (Guest, I.e, KVM) - PCIe slot 2
 - Memory:
-    - [G.Skill Trident Neo](https://www.gskill.com/product/165/326/1562839388/F4-3600C16Q-32GTZNTrident-Z-NeoDDR4-3600MHz-CL16-16-16-36-1.35V32GB-(4x8GB)) DDR4 3600 MHz 32GB (4x8)
+    - [G.Skill Trident Neo DDR4 3600 MHz 32GB](https://www.gskill.com/product/165/326/1562839388/F4-3600C16Q-32GTZNTrident-Z-NeoDDR4-3600MHz-CL16-16-16-36-1.35V32GB-(4x8GB)) (4x8)
 - Disk:
     - [Samsung 970 EVO Plus 500GB](https://www.amazon.com/Samsung-970-EVO-Plus-MZ-V7S1T0B/dp/B07MFZY2F2) - M.2 NVMe (Passthrough)
     - [Samsung 860 PRO 2 TB](https://www.amazon.com/Samsung-512GB-V-NAND-Solid-MZ-76P512BW/dp/B07879KC15/ref=sr_1_2?dchild=1&keywords=860%2Bpro&qid=1613689682&s=electronics&sr=1-2&th=1) - SSD (Passthrough)
@@ -78,3 +78,63 @@ Now here is a breakdown of my exact PC Setup. Please be aware that **there are d
 <h3 name="part1">
     Part 1: Prerequisites
 </h3>
+
+
+
+Before anything, you need to get these packages.
+```
+$ sudo apt install libvirt-daemon-system libvirt-clients qemu-kvm qemu-utils virt-manager ovmf
+```
+After this is completed you are going to want to restart your pc and enter your BIOS. BIOS entry varies by manufacturer. In my case I can access it with F2, F8, or DEL. Enable the feature called `IOMMU`. Once this is completed you will thenn need to enable CPU virtualization. For Intel processors you will need to enable `VT-d`. FOR AMD, look for something called `AMD-Vi` or in the case of my motherboard `SVM`/`SVM MODE` and enable it. Save your changes to the BIOS and then go back into pop!
+
+Once you are back in and logged in you are going to want to run this command.
+
+AMD:
+```
+$ dmesg | grep AMD-Vi
+```
+
+Intel:
+```
+$ dmesg | grep VT-d
+```
+
+If you get this error:
+```
+dmesg: read kernel buffer failed: Operation not permitted
+```
+
+Run it as sudo.
+```
+$ sudo dmesg | grep AMD-Vi
+```
+
+If you get output that looks like this. You should be ready.
+
+  ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/grep_AMD-Vi.png)
+  
+Once this is completed you will need to pass this hardware-enabled IOMMU functionality into the kernel. You can read more about that [here](https://wiki.archlinux.org/index.php/kernel_parameters). Depending on your boot-loader you will have to figure out how to do this yourself but for me, I can use [kernelstub](https://github.com/pop-os/kernelstub). Other people use grub or rEFInd.
+
+
+
+AMD:
+```
+$ sudo kernelstub --add-options "amd_iommu=on"
+```
+
+Intel:
+```
+$ sudo kernelstub --add-options "intel_iommu=on"
+```
+
+IF you do use GRUB2 you can do it thise way by going into /etc/default/grub with sudo permissions and include it into the kernel parameter below.
+
+AMD:
+```
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash intel_iommu=on"
+```
+
+Intel:
+```
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash amd_iommu=on"
+```
