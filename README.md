@@ -1,4 +1,4 @@
-# pop_OS-win10-KVM-setup
+# pop!_OS-win10-KVM-setup
 
 <h5 name="help">
   Spelling and grammar assistance by my buddy Isaiah, thank you.
@@ -274,7 +274,9 @@ Since I did not need that part I will be skipping it. The next steps are applica
 <h2 name="VM logistics">
 ***OPTIONAL*** VM Dynamic Binding
 </h2>
-How: Libvirt has a hook ([libvirt hooks](https://libvirt.org/hooks.html) system that grants you access to running commands on startup or shutdown of the VM. The scripts that are located within the directory `/etc/libvirt/hooks`. If the directory cannot be found or does not exist, create it. 
+How: Libvirt has a hook [ibvirt hooks](https://libvirt.org/hooks.html) system that grants you access to running commands on startup or shutdown of the VM. The scripts that are located within the directory `/etc/libvirt/hooks`. If the directory cannot be found or does not exist, create it. 
+]
+
 ```
 $ sudo mkdir /etc/libvirt/hooks
 ```
