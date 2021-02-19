@@ -8,19 +8,20 @@
   PREFACE:
 </h1>
 
-You don't *need* strong terminal skills to do this but it is highly suggested to know basic commands to get yourself through this, especially if you're not using user-friendly desktop environments or plan to do this entirely through the Terminal.
+You don't *need* strong terminal skills to do this, but it is highly suggested to know basic commands to get yourself through this, especially if you are not using user-friendly desktop environments or plan to do this entirely through the Terminal. If you don't have good terminal skills I suggest [this](https://ubuntu.com/tutorials/command-line-for-beginners#1-overview) article
 
-I have moderately strong terminal knowledge so this was a breeze for me but I entirely understand new users who are wanting to get into the KVM environment after swithching to linux for the myriad of reasons that one may have(I don't blame you for moving! Welcome to Linux!).
+I have moderately strong terminal knowledge so this was a breeze for me, but I entirely understand new users who are wanting to get into the KVM environment after switching to Linux for the myriad of reasons that one may have(I don't blame you for moving. [Welcome to Linux!](https://livebook.manning.com/book/linux-in-action/chapter-1/10)).
 
-If you are a seasoned UNIX/Linux/Related user, this may not be the guide for you as there will be a lot of simple hand holding information here. In that case might I suggest going to the [Arch](https://wiki.archlinux.org/index.php/KVM) KVM wiki or alternatively going to the guides listed [here]().
+If you are a seasoned UNIX/Linux/Related user, this may not be the guide for you as there will be a lot of simple hand holding information here. In that case might I suggest going to the [Arch](https://wiki.archlinux.org/index.php/KVM) KVM wiki or alternatively going to the guides listed [below](https://github.com/mr2527/pop_OS-win10-KVM-setup#--guides).
 
-This is a repo that contains a tutorial and the necessary scripts to create a working Pop!\_OS 20.10 x86_64 -> windows 10 KVM.
+This is a repo that contains a tutorial and the necessary scripts to create a working [Pop!\_OS 20.10 x86_64](https://pop.system76.com/) -> windows 10 KVM.
 
   ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/pop_Neofetch.png)
   
-^If you want **this** information then simply:
+^If you want **this** information then simply install [neofetch](https://github.com/dylanaraps/neofetch):
 ```
 $ sudo apt install neofetch
+$ neofetch
 ```
 
 <h2 name="introduction">
