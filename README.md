@@ -89,13 +89,51 @@ Below is a breakdown of my exact PC Setup. Please be aware that **there are diff
     Part 1: Prerequisites
 </h3>
 
+<h4 name="tips/tricks">
+    Tips/Tricks
+</h4>
+
+If you are tired of having to enter a password for each sudo you do just do the following:
+```
+$ sudo -i
+```
+This will sign you into root.
+
+Before anything, **it is required** to install these packages and download these files.
+
+1. Update your OS if it is out of date:
+```
+$ sudo apt-get update
+$ sudo apt-get upgrade
+$ sudo apt-get dist-upgrade
+```
+
+2. Download virtIO ISO files (***MANDATORY***)
+Since this project is a KVM for Windows 10, you are required to download and use virtIO drivers. [virtIO] is a virtualization standard for network/disk device drivers. The addition of virtIO can be done by attaching the ISO to the windows VM in the application Virt-Manager (we will get this later). [Get the virtIO drivers here](https://docs.fedoraproject.org/en-US/quick-docs/creating-windows-virtual-machines-using-virtio-drivers/#virtio-win-direct-downloads)
+
+3. Download Windows 10 ISO files (***MANDATORY***)
+Since we are going to be creating a *Windows* kvm, you need the ISO for it. [Get the lastest Windows 10 ISO here](https://www.microsoft.com/en-us/software-download/windows10ISO)
+
+4.***OPTIONAL***:
+
+<h4 name="AMD optional">
+  If you own an AMD graphics card that you will be passing through:
+</h4>
+
+You don't *need* the Vulkan Drivers but if you want the best performance you can get on the host if it uses an AMD GPU I highly suggest this. Ubuntu comes with `mesa-vulkan-drivers` which offer comparable or better performance but you can get the AMD Vulkan drivers here:
+```
+sudo wget -qO - http://repo.radeon.com/amdvlk/apt/debian/amdvlk.gpg.key | sudo apt-key add -
+sudo sh -c 'echo deb [arch=amd64] http://repo.radeon.com/amdvlk/apt/debian/ bionic main > /etc/apt/sources.list.d/amdvlk.list'
+sudo apt update
+sudo apt-get install amdvlk
+```
 
 
-Before anything, **it is required** to install these packages.
+5. Install the following packages (***MANDATORY***)
 ```
 $ sudo apt install libvirt-daemon-system libvirt-clients qemu-kvm qemu-utils virt-manager ovmf
 ```
-After this is completed, you are going to want to restart your pc and enter your BIOS. BIOS entry varies by manufacturer. In my case I can access it with F2, F8, or DEL. Enable the feature called `IOMMU`. Once this is completed you will then need to enable CPU virtualization. For Intel processors, you will need to enable `VT-d`. For AMD, look for something called `AMD-Vi` or in the case of my motherboard `SVM`/`SVM MODE` and enable it. Save your changes to the BIOS and then go back into pop!
+After this is completed, you are going to restart your PC and enter your BIOS. BIOS entry varies by manufacturer. In my case I can access it with F2, F8, or DEL. Enable the feature called `IOMMU`. Once this is completed you will then need to enable CPU virtualization. For Intel processors, you will need to enable `VT-d`. For AMD, look for something called `AMD-Vi` or in the case of my motherboard `SVM`/`SVM MODE` and enable it. Save your changes to the BIOS and then go back into pop!
 
 Once you are logged back in you are going to want to run **this** command:
 
@@ -137,7 +175,7 @@ Intel:
 $ sudo kernelstub --add-options "intel_iommu=on"
 ```
 
-If you use GRUB2, you can do it by going into /etc/default/grub with sudo permissions and include it into the kernel parameter below.
+If you use [GRUB2](https://help.ubuntu.com/community/Grub2), you can do it by going into /etc/default/grub with sudo permissions and include it into the kernel parameter below.
 
 AMD:
 ```
@@ -148,3 +186,52 @@ Intel:
 ```
 GRUB_CMDLINE_LINUX_DEFAULT="quiet splash amd_iommu=on"
 ```
+
+As mentioned in [Bryan's guide](https://github.com/bryansteiner/gpu-passthrough-tutorial/blob/master/README.md), when planning the GPU passthrough setup, it was said to blacklist the NVIDIA/AMD drivers. "The logic stems from the fact that since the native drivers can't attach to the GPU at boot-time, the GPU will be freed-up and available to bind to the vfio drivers instead." The tutorials will make you add a parameter called `pci-stub` with the PCI bus ID of the GPU you wish to use. I did not follow this approach and instead dynamically unbind the drivers and bind `VFIO-PCI` drivers to it. Alternatively, you can run this script to bind the `VFIO-PCI` drivers to the secondary card in your PC. But it is important to understand IOMMU groupings. The script provided by [Bryan here](https://github.com/bryansteiner/gpu-passthrough-tutorial/blob/master/kvm/scripts/iommu.sh) is perfectly adequate for finding IOMMU groups, but I found [this script](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Scripts/iommu2.sh) to be better. 
+
+The reason we want to use either script is to find the devices we want to passthrough (storage drivers, PCIe hardware, etc). [IOMMU](https://en.wikipedia.org/wiki/Input%E2%80%93output_memory_management_unit) is a reference to the chipset device that maps virtual addresses to physical addresses on the input/output of the devices. At the end of this step we want to make sure that we have appropriate IOMMU groupings. The reason for this is you cannot separate the groupings.
+
+Run the script:
+```
+./iommu2.sh
+```
+
+If you cannot run the script, with or withou sudo, then you should run:
+```
+chmod +x ./iommu2.sh
+```
+[chmod](https://en.wikipedia.org/wiki/Chmod) elevates permissions for files and in this case would allow you to run this without complications.
+
+For AMD systems the output will look something like this:
+
+  ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/iommu2.png)
+
+Pulled from [Bryan's guide](https://github.com/bryansteiner/gpu-passthrough-tutorial/blob/master/README.md), Intel output should look like.
+
+```
+...
+IOMMU Group 1 00:01.0 PCI bridge [0604]: Intel Corporation Xeon E3-1200 v5/E3-1500 v5/6th Gen Core Processor PCIe Controller (x16) [8086:1901] (rev 07)
+IOMMU Group 1 00:01.1 PCI bridge [0604]: Intel Corporation Xeon E3-1200 v5/E3-1500 v5/6th Gen Core Processor PCIe Controller (x8) [8086:1905] (rev 07)
+IOMMU Group 1 01:00.0 VGA compatible controller [0300]: NVIDIA Corporation TU102 [GeForce RTX 2080 Ti Rev. A] [10de:1e07] (rev a1)
+IOMMU Group 1 01:00.1 Audio device [0403]: NVIDIA Corporation TU102 High Definition Audio Controller [10de:10f7] (rev a1)
+IOMMU Group 1 01:00.2 USB controller [0c03]: NVIDIA Corporation TU102 USB 3.1 Controller [10de:1ad6] (rev a1)
+IOMMU Group 1 01:00.3 Serial bus controller [0c80]: NVIDIA Corporation TU102 UCSI Controller [10de:1ad7] (rev a1)
+IOMMU Group 1 02:00.0 VGA compatible controller [0300]: Advanced Micro Devices, Inc. [AMD/ATI] Ellesmere [Radeon RX 470/480/570/570X/580/580X/590] [1002:67df] (rev e1)
+IOMMU Group 1 02:00.1 Audio device [0403]: Advanced Micro Devices, Inc. [AMD/ATI] Ellesmere HDMI Audio [Radeon RX 470/480 / 570/580/590] [1002:aaf0]
+...
+```
+
+If you have the problem presented in the Intel example, you have 2 options:
+1. You can try swapping which PCI slot the graphics cards are in. This may or may not provide the expected results.
+2. Alternatively you can conduct an [ACS Override Patch](https://queuecumber.gitlab.io/linux-acs-override/). It's *highly* worth it to read this post from [Alex Williamson](https://vfio.blogspot.com/2014/08/iommu-groups-inside-and-out.html). "Applying the ACS Override Patch may compromise system security. Check out this post to see why the ACS patch will probably never make its way upstream to the mainline kernel." 
+
+
+<h4 name="part 1.1">
+    ACS Override Patch (Optional):
+</h4>
+
+**PLEASE go to [Bryan's guide](https://github.com/bryansteiner/gpu-passthrough-tutorial/blob/master/README.md) and read how to do it there and understand the complications.**
+
+Since I did not need that part I will be skipping it. The next steps are applicable to if you needed the patch or not.
+
+
