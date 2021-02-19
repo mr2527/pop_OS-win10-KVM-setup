@@ -80,6 +80,15 @@ Below is a breakdown of my exact PC Setup. Please be aware that **there are diff
 * [Hardware that can support IOMMU](https://en.wikipedia.org/wiki/List_of_IOMMU-supporting_hardware) (Please read before proceeding).
 * A monitor with more than one input or more than one monitor (Will be discussed later).
 
+<h2 name="tips/tricks">
+    Tips/Tricks
+</h2>
+
+If you are tired of having to enter a password for each sudo you do just do the following:
+```
+$ sudo -i
+```
+This will sign you into root.
 
 <h2 name="tutorial">
     Tutorial
@@ -88,16 +97,6 @@ Below is a breakdown of my exact PC Setup. Please be aware that **there are diff
 <h3 name="part1">
     Part 1: Prerequisites
 </h3>
-
-<h4 name="tips/tricks">
-    Tips/Tricks
-</h4>
-
-If you are tired of having to enter a password for each sudo you do just do the following:
-```
-$ sudo -i
-```
-This will sign you into root.
 
 Before anything, **it is required** to install these packages and download these files.
 
