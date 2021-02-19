@@ -14,7 +14,7 @@ I have moderately strong terminal knowledge so this was a breeze for me, but I e
 
 If you are a seasoned UNIX/Linux/Related user, this may not be the guide for you as there will be a lot of simple hand holding information here. In that case might I suggest going to the [Arch](https://wiki.archlinux.org/index.php/KVM) KVM wiki or alternatively going to the guides listed [below](https://github.com/mr2527/pop_OS-win10-KVM-setup#--guides).
 
-This is a repo that contains a tutorial and the necessary scripts to create a working [Pop!\_OS 20.10 x86_64](https://pop.system76.com/) -> windows 10 KVM.
+This is a repo that contains a tutorial and the necessary scripts to create a working [Pop!\_OS 20.10 x86_64](https://pop.system76.com/) -> Windows 10 KVM.
 
   ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/pop_Neofetch.png)
   
@@ -65,7 +65,7 @@ This guide is designed to pull information from both sub-guides. All other guide
 
 Below is a breakdown of my exact PC Setup. Please be aware that **there are differences** between AMD and Intel builds regarding BIOS options and selecting the correct options. 
 
-**I am on an AMD/NVIDIA build but I will try to help intel users as well, but your mileage may vary.**
+**I am on an AMD/NVIDIA build but I will try to help Intel users as well, but your mileage may vary.**
 
 <h3 name="hardware_setup">
     Hardware Setup
@@ -119,7 +119,7 @@ $ sudo apt install Tree
 
 You can then run it simply by:
 ```
-tree
+$ tree
 ```
 It will produce output like this:
 
@@ -164,7 +164,6 @@ sudo sh -c 'echo deb [arch=amd64] http://repo.radeon.com/amdvlk/apt/debian/ bion
 sudo apt update
 sudo apt-get install amdvlk
 ```
-
 
 5. Install the following packages (***MANDATORY***)
 ```
@@ -293,7 +292,124 @@ $ sudo service libvirtd restart
 
 If you want to dynamically bind the VFIO-PCI drivers before the VM starts and unbind after you end it, you can do as follows:
 
+Recognize the most important hooks
+```
+# Before a VM is started, before resources are allocated:
+/etc/libvirt/hooks/qemu.d/$vmname/prepare/begin
 
-<h2 name="VM logistics skip">
-***EASIER*** VM Dynamic Binding
+# Before a VM is started, after resources are allocated:
+/etc/libvirt/hooks/qemu.d/$vmname/start/begin
+
+# After a VM has started up:
+/etc/libvirt/hooks/qemu.d/$vmname/started/begin
+
+# After a VM has shut down, before releasing its resources:
+/etc/libvirt/hooks/qemu.d/$vmname/stopped/end
+
+# After a VM has shut down, after resources are released:
+/etc/libvirt/hooks/qemu.d/$vmname/release/end
+```
+
+I have named my VM "pop" for this example. My directory structure is:
+
+  ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/pop_tree_struct.png)
+
+Now is when things get fun. Create a file named `kvm.conf`. My editor of choice is [vim](https://www.vim.org/). If you want to avoid problems when creating these files:
+```
+$ sudo $editor_you_want_to_use kvm.conf
+```
+
+Once you have the file open add these entries:
+```
+## Virsh devices
+VIRSH_GPU_VIDEO=pci_0000_0b_00_0
+VIRSH_GPU_AUDIO=pci_0000_0b_00_1
+```
+These are how my groupings are made so you are **required* to find your correct groupings and place them here. If you forget where to get them, use the iommu2.sh script by:
+```
+$ ./iommu2.sh
+```
+
+The output of the script will translate the address for each device. Ex: `IOMMU group 27 0b:00.0` which is written as --> `VIRSH_GPU_VIDEO=pci_0000_0b_00_0`. You will need to figure this out on your own! 
+
+Once you got the currect bus addresses you can then move on to create some scripts:
+
+`bind_vfio.sh`:
+```
+#!/bin/bash
+
+## Load the config file
+source "/etc/libvirt/hooks/kvm.conf"
+
+## Load vfio
+modprobe vfio
+modprobe vfio_iommu_type1
+modprobe vfio_pci
+
+## Unbind gpu from nvidia and bind to vfio
+virsh nodedev-detach $VIRSH_GPU_VIDEO
+virsh nodedev-detach $VIRSH_GPU_AUDIO
+```
+
+`unbind_vfio.sh`:
+```
+#!/bin/bash
+
+## Load the config file
+source "/etc/libvirt/hooks/kvm.conf"
+
+## Unbind gpu from vfio and bind to nvidia
+virsh nodedev-reattach $VIRSH_GPU_VIDEO
+virsh nodedev-reattach $VIRSH_GPU_AUDIO
+
+## Unload vfio
+modprobe -r vfio_pci
+modprobe -r vfio_iommu_type1
+modprobe -r vfio
+```
+
+My script varies from [Bryan's](https://github.com/bryansteiner/gpu-passthrough-tutorial#----part-2-vm-logistics) by removing groupings I do not have. It works for me. You may need to tweak it some.
+
+Once the scripts are created, chmod them:
+```
+$ chmod +x bind_vfio.sh unbind_vfio.sh
+```
+If this doesn't work, just add sudo to the front.
+
+It should look like the image above once completed. You should be all set in this case. Tweaks to the VM will be made later or you can skip the tweaks. I skipped some tweaks and my performance is just fine.
+
+Take a breather! We are almost there!
+
+<h2 name="part3">
+  Creating the VM in Virt-Manager
 </h2>
+
+Once you are here we can begin the construction of our VM. If you are a new user I suggest the GUI approach that I will describe. Otherwise you can take a read [YuriAlek's series of GPU passthrough scripts](https://gitlab.com/YuriAlek/vfio). The scripting is obviously more involved and takes some skill to process. The GUI approach is easier. There is nothing wrong with this approach!
+
+You can now start [Virt-Manager](https://virt-manager.org/), you will be presented with this screen:
+
+  ![alt text]()
+
+Click on the screen with yellow light icon or navigate to `File > Add Connection`. You will be presented with this screen. Choose `Local install media (ISO image or CDROM)` and select `Forward`. You will then see:
+
+  ![alt text]()
+
+Remember those ISOs we installed earlier? We are going to need them now. I store them on my `Desktop/`. Store them wherever you want and navigate to that installation location by selecting the `browse` button. Choose the Win10 ISO. The `Choose the operating system you are installing:` section should now autocomplete. Keep the button checked and continue `Forward`. You will be presented with:
+
+  ![alt text]()
+
+You will now configure your Memory (RAM) and CPU settings. In my case, I will designate 16GB of ram for now (16384) and since I have a 12c/24t CPU, I will pass in all 12 cores. Proceed `Forward` and be met with:
+
+  ![alt text]()
+
+In this case you will be creating a custom storage for the Windows install. Select `Enable storage for this virtual machine` and then `Select or create custom storage` and then navigate the Storage Volume menu and create a storage volume with any size above 50GB. In this case you want to create a storage volume with any name you would like and with a format of `qcow2` the rest doesn't matter. It can be stored wherever you like. Once created select it and proceed with `Choose Volume` and lastly go `Forward`. 
+
+  ![alt text]()
+
+***NOTE***: I had a problem when I initially created this because I named it `win10`. I highly suggest NOT naming it this. Instead do `Windows10` if you really want. Lastly select `Customize configuration before install` and then `Finish`.
+
+  ![alt text]()
+
+A new window will now appear called `$VM_NAME on QEMU/KVM`. This will allow you to configure more advanced options. You can alter these options through GUI or libvirt XML settings. Please ensure that while on the `Overview` page under `Firmware` you select `UEFI x86_64: /usr/share/OVMF_CODE_4d.fd` and none of the other options.
+
+  ![alt text]()
