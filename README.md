@@ -4,6 +4,16 @@
   Spelling and grammar assistance by my buddy Isaiah, thank you.
 </h5>
 
+<h1 name="preface">
+  PREFACE:
+</h1>
+
+You don't *need* strong terminal skills to do this but it is highly suggested to know basic commands to get yourself through this, especially if you're not using user-friendly desktop environments or plan to do this entirely through the Terminal.
+
+I have moderately strong terminal knowledge so this was a breeze for me but I entirely understand new users who are wanting to get into the KVM environment after swithching to linux for the myriad of reasons that one may have(I don't blame you for moving! Welcome to Linux!).
+
+If you are a seasoned UNIX/Linux/Related user, this may not be the guide for you as there will be a lot of simple hand holding information here. In that case might I suggest going to the [Arch](https://wiki.archlinux.org/index.php/KVM) KVM wiki or alternatively going to the guides listed [here]().
+
 This is a repo that contains a tutorial and the necessary scripts to create a working Pop!\_OS 20.10 x86_64 -> windows 10 KVM.
 
   ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/pop_Neofetch.png)
@@ -26,6 +36,10 @@ This KVM for Windows 10 will allow for PCIE and SATA devices to be passed throug
 My reasoning for creating this was because at the time, I was and still am a new Linux user that is also a big gamer. I did not want to abandon my chances of gaming with my want of moving over to a better development environment. I also did not want to necessarily deal with the annoying dual booting that I have. It's just easier to pull my hairs out for a few days and learn to setup this than dual booting.
 
 I spent nearly a week sifting through various guides getting this to environment to work (properly) on my desktop, and I want to share the tips and tricks I've learned along the way and present a digestible way to getting your KVM / Virt-Manager set up (for windows 10) for inexperienced users. Some guides would get me halfway and then wouldn't provide me with enough information on where to go next. Then I would find a different guide that summed up the first up but left delicate details out. All the guides I have read however are great and I want to give recognition to the individuals that helped me get this environment to work.
+
+<h3 name="Guides">
+  Guides:
+</h3>
 
 Please consider checking out these guides to find out where I was able to get my information from - I highly suggest it, The information is great.
 
@@ -84,11 +98,34 @@ Below is a breakdown of my exact PC Setup. Please be aware that **there are diff
     Tips/Tricks
 </h2>
 
-If you are tired of having to enter a password for each sudo you do just do the following:
+1. If you are tired of having to enter a password for each sudo you do just do the following:
 ```
 $ sudo -i
 ```
 This will sign you into root.
+
+
+2. Remember tab completion! It will make your life a lot easier when going back and forth between directories.
+
+
+3. It's a confusing experience but I am sure you can get through it with some perseverance. Keep at it.
+
+
+4. I suggest installing [Tree](https://www.computerhope.com/unix/tree.htm) to see how directories are laid out in the terminal (useful later!):
+```
+$ sudo apt install Tree
+```
+
+You can then run it simply by:
+```
+tree
+```
+It will produce output like this:
+
+  ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/tree_example.png)
+
+
+5. Basic Terminal commands. clear, ls, cd, mkdir, cp, etc.
 
 <h2 name="tutorial">
     Tutorial
@@ -229,8 +266,33 @@ If you have the problem presented in the Intel example, you have 2 options:
     ACS Override Patch (Optional):
 </h4>
 
-**PLEASE go to [Bryan's guide](https://github.com/bryansteiner/gpu-passthrough-tutorial/blob/master/README.md) and read how to do it there and understand the complications.**
+**PLEASE go to [Bryan's guide](https://github.com/bryansteiner/gpu-passthrough-tutorial/blob/master/README.md) and read how to do it there and understand the complications and implications.**
 
-Since I did not need that part I will be skipping it. The next steps are applicable to if you needed the patch or not.
+Since I did not need that part I will be skipping it. The next steps are applicable if you needed the patch or not. Dynamic binding is not necesarrily required. But it works in my case so I suggest looking into it. I will provide instructions below.
 
 
+<h2 name="VM logistics">
+***OPTIONAL*** VM Dynamic Binding
+</h2>
+How: Libvirt has a hook ([libvirt hooks](https://libvirt.org/hooks.html) system that grants you access to running commands on startup or shutdown of the VM. The scripts that are located within the directory `/etc/libvirt/hooks`. If the directory cannot be found or does not exist, create it. 
+```
+$ sudo mkdir /etc/libvirt/hooks
+```
+
+But lucky for us we have the [hook helper](https://passthroughpo.st/simple-per-vm-libvirt-hooks-with-the-vfio-tools-hook-helper/) which can be ran as followed:
+```
+$ sudo wget 'https://raw.githubusercontent.com/PassthroughPOST/VFIO-Tools/master/libvirt_hooks/qemu' \-O /etc/libvirt/hooks/qemu
+$ sudo chmod +x /etc/libvirt/hooks/qemu
+```
+
+Now restart the libvirt to use the hook helper:
+```
+$ sudo service libvirtd restart
+```
+
+If you want to dynamically bind the VFIO-PCI drivers before the VM starts and unbind after you end it, you can do as follows:
+
+
+<h2 name="VM logistics skip">
+***EASIER*** VM Dynamic Binding
+</h2>
