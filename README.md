@@ -424,3 +424,150 @@ A new window will now appear called `$VM_NAME on QEMU/KVM`. This will allow you 
 <p align="center">
   <img width="600" height="600" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/virt7.png">
 </p>
+
+Next up we will move to the `CPUs` tab. Here we are going to change under `Configuration` make sure `Copy host cpu configuration` is *NOT* checked, change `Model` to `host-passthrough` and select `Enable available CPU security flaw mitigations`. This is to prevent against Spectre/Meltdown vulnerabilities. Don't bother with Topology yet. 
+
+<p align="center">
+  <img width="600" height="600" src="">
+</p>
+
+Next up you can remove a few options from the side. ***Remove*** `Tablet`, `Channel Spice` and `Console`. 
+
+Select `Sata Disk 1` > `Advanced options disk bus` -> `VirtIO`
+
+<p align="center">
+  <img width="600" height="600" src="">
+</p>
+
+Navigate to `NIC` and change Device model to `virtio`
+
+<p align="center">
+  <img width="600" height="600" src="">
+</p>
+
+`Add Hardware`, add `Channel Device`, keep the default name, choose `Device type - Unix Socket`.
+
+<p align="center">
+  <img width="600" height="600" src="">
+</p>
+
+`Add Hardware`, Storage, Browse, Browse Local, choose `virtio-win-0.1.185.iso`.
+
+<p align="center">
+  <img width="600" height="600" src="">
+</p>
+
+`Add Hardware`, PCI host device, (in my case I added), `PCI host device, 0b:00.0 NVIDIA Corporation Device`, you will need to find your appropriate grouping with your `VFIO-pci driver`. This is my GPU visuals
+
+<p align="center">
+  <img width="600" height="600" src="">
+</p>
+
+`Add Hardware`, PCI host device, (in my case I added), `PCI host device, 0b:00.1 NVIDIA Corporation Device`, you will need to find your appropriate grouping with your `VFIO-pci driver`. This is my GPU audio.
+
+<p align="center">
+  <img width="600" height="600" src="">
+</p>
+
+Now if you want to pass in and USB Host Devices feel free to add whatever ones you want. I did this and changed it later to pass in the entire PCI device. 
+
+Now we are going to have to get our hands dirty with editing the XML file. Go to `Virtual Machine Manager`, select `edit` -> `preferences` -> `General` -> `Enable XML editing` and now you can navigate to the `$VM_NAME on QEMU/KVM` window and then select `Overview` -> `XML`.
+
+<p align="center">
+  <img width="600" height="600" src="">
+</p>
+
+If you are passing in an NVIDIA GPU to the VM you may run into [Error 43](https://passthroughpo.st/apply-error-43-workaround/). This is because NVIDIA doesn't enable virtualization on their GeForce cards. The workaround is to have hypervisor hide its existence. From here navigate to the `<hyperv>` section and add this.
+```
+<hyperv>
+<features>
+    ...
+    <hyperv>
+        <relaxed state="on"/>
+        <vapic state="on"/>
+        <spinlocks state="on" retries="8191"/>
+        <vendor_id state="on" value="kvm hyperv"/>
+    </hyperv>
+    ...
+</features>
+```
+
+Next drectly under the `</hyperv>` line add
+```
+<features>
+    ...
+    <hyperv>
+        ...
+    </hyperv>
+    <kvm>
+      <hidden state="on"/>
+    </kvm>
+    ...
+</features>
+```
+
+If QEMU 4.0 is being used with a q35 chipset you will need to add this to the end of `<features>`.
+```
+<features>
+    ...
+    <ioapic driver="kvm"/>
+</features>
+```
+
+Error 43 should no longer occur.
+
+<h2 name="part4">
+  Installing Windows 10 in the VM
+</h2>
+
+This section will detail on how to install the Windows 10 VM and get ready to move forward with tweaks and updates to get your performance better. I will be pulling from [Aaron's guide](https://github.com/aaronanderson/LinuxVMWindowsSteamVR#windows-installation---part-1) in this section. 
+
+START the VM. Click into the VM window and it should have your mouse and keyboard take over the window. Press enter when you are prompted to boot from the CDROM. There is a chance you weren't fast enough and then you be shown the UEFI shell. If this is the case, type `exit` or go to `boot manager` -> `UEFI QEMU DCDROM QM03` (There may be more than 1 zero if yours).
+
+Select 'I don't have a product key' I highly suggest *not* putting a windows code in unless you are 100% completed with your installation and are fine with the performance. Reinstallation is not out of the ordinary.
+
+On the installation screen for windows, select `Custom: Install Windows Only (advanced)`. This is because Windows does not have VirtIO drivers included. This will restrict your VM from seeing the drive. Click load driver, browse for your drive. In my case it was `E:` but for you it may be different. It should say: `E: virtio-win-0.1.173`, once here select the folder `amd64\w10`.
+
+Once this is done and the installation goes on, you can then try to shutdown the VM before Windows auto-restarts. If you get stuck on a black screen due to an AMD GPU bug then force your VM off and put the host to sleep then wake up the host.
+
+<h2 name="part5">
+  Adding a VBIOS to Your Guest (Windows 10) VM
+</h2>
+
+Since we completed the Windows install we can do some more setup by sending the proper VBIOS for your guest. You don't have to do this but it's highly suggested to get the best performance. ***IF YOU NEED TO GET YOUR VBIOS*** navigate to -> `https://www.techpowerup.com/vgabios/` and find your model and correct VBIOS. Once you have this you can download it to anywhere you will remember it and then:
+
+```
+$ sudo mkdir /etc/firmware
+$ sudo cp EVGA.RTX3070.8192.201019.rom /etc/firmware/
+$ sudo chown root:root /etc/firmware/EVGA.RTX3070.8192.201019.rom
+$ sudo chmod 744 /etc/firmware/EVGA.RTX3070.8192.201019.rom
+```
+
+I use vim so:
+```
+$ sudo vi /etc/apparmor.d/abstractions/libvirt-qemu
+```
+
+append this to the very end and the SPACES ARE IMPORTANT!!!
+```
+  /etc/firmware/* r,
+```
+Once written and you're ready to quit (on vim) shift + : then type `:wq!`, this will write and quit. If you write `:Wq!` it will not work.
+
+run:
+```
+$ sudo systemctl restart apparmor.service
+```
+
+Now navigate back to your virt-manager and find the PCI device that you added that your GPU is under. Click xml and edit the xml to include this:
+```
+<hostdev mode="subsystem" type="pci" managed="yes">
+  <source>
+    <address domain="0x0000" bus="0x0b" slot="0x00" function="0x0"/>
+  </source>
+  <rom bar="on" file="/etc/firmware/EVGA.RTX3070.8192.201019.rom"/>
+  <address type="pci" domain="0x0000" bus="0x05" slot="0x00" function="0x0"/>
+</hostdev>
+```
+
+The important bit is the `<rom bar="on" file="/etc/firmware/EVGA.RTX3070.8192.201019.rom"/>` This will be different depending on your IOMMU grouping, your graphics card and your VBIOS so please keep an eye eye and add the appropriate content. 
