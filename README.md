@@ -422,5 +422,5 @@ In this case you will be creating a custom storage for the Windows install. Sele
 A new window will now appear called `$VM_NAME on QEMU/KVM`. This will allow you to configure more advanced options. You can alter these options through GUI or libvirt XML settings. Please ensure that while on the `Overview` page under `Firmware` you select `UEFI x86_64: /usr/share/OVMF_CODE_4M.fd` and none of the other options.
 
 <p align="center">
-  <src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/virt7.png">
+  <img width="600" height="600" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/virt7.png">
 </p>
