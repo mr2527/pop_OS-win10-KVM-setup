@@ -616,4 +616,168 @@ to save it.
   From this point you can play with your new KVM:
 </h2>
 
-Boot into your VM and configure the drivers, make sure everything is working correctly. 
+***I will provide my final XML [here]() but make sure you are appropriately creating these entries relative to your hardwares topology. I have a 12 core 24 thread cpu and some sections will not look the same for you.***
+
+Boot into your VM and double check the drivers. Make sure everything is working correctly. 
+
+Now we can begin editing the XML for some changed that will boost performance!
+
+Navigate to `Overview` -> `XML` we got some dirty work to do.
+
+Change the very first line to be:
+```
+<domain xmlns:qemu="http://libvirt.org/schemas/domain/qemu/1.0" type="kvm">
+```
+Do not apply yet. Go all the way to the bottom of the XML and under the `</devices>` section add:
+```
+...
+  </devices>
+  <qemu:commandline>
+    <qemu:arg value="-cpu"/>
+    <qemu:arg value="host,hv_time,kvm=off,hv_vendor_id=null"/>
+  </qemu:commandline>
+</domain>
+```
+Now apply. These new insertions should stay. If you did it incorrectly they will disappear after applying. Double check to make sure that it sticks. Proceed with the instructions in the next section.
+
+<h3 name="pinning"
+  CPU Pinning (ONLY if you are [multithreaded](https://en.wikipedia.org/wiki/Multithreading_(computer_architecture))):
+</h3>
+
+Now we have to learn how to do some CPU pinning ONLY if you have a multithreaded capable CPU.
+VMs are incapable of distinguishing between physicsl and logical cores (threads). Virt-manager can see that 24 vCPUs exist and are available but the host has two cores mapped to a single physical core on the physical CPU die. If you want a terminal view of the cores run the command:
+```
+$ lscpu -e
+```
+This will provide output that looks like this (for me):
+```
+CPU NODE SOCKET CORE L1d:L1i:L2:L3 ONLINE    MAXMHZ    MINMHZ
+  0    0      0    0 0:0:0:0          yes 3800.0000 2200.0000
+  1    0      0    1 1:1:1:0          yes 3800.0000 2200.0000
+  2    0      0    2 2:2:2:0          yes 3800.0000 2200.0000
+  3    0      0    3 3:3:3:1          yes 3800.0000 2200.0000
+  4    0      0    4 4:4:4:1          yes 3800.0000 2200.0000
+  5    0      0    5 5:5:5:1          yes 3800.0000 2200.0000
+  6    0      0    6 6:6:6:2          yes 3800.0000 2200.0000
+  7    0      0    7 7:7:7:2          yes 3800.0000 2200.0000
+  8    0      0    8 8:8:8:2          yes 3800.0000 2200.0000
+  9    0      0    9 9:9:9:3          yes 3800.0000 2200.0000
+ 10    0      0   10 10:10:10:3       yes 3800.0000 2200.0000
+ 11    0      0   11 11:11:11:3       yes 3800.0000 2200.0000
+ 12    0      0    0 0:0:0:0          yes 3800.0000 2200.0000
+ 13    0      0    1 1:1:1:0          yes 3800.0000 2200.0000
+ 14    0      0    2 2:2:2:0          yes 3800.0000 2200.0000
+ 15    0      0    3 3:3:3:1          yes 3800.0000 2200.0000
+ 16    0      0    4 4:4:4:1          yes 3800.0000 2200.0000
+ 17    0      0    5 5:5:5:1          yes 3800.0000 2200.0000
+ 18    0      0    6 6:6:6:2          yes 3800.0000 2200.0000
+ 19    0      0    7 7:7:7:2          yes 3800.0000 2200.0000
+ 20    0      0    8 8:8:8:2          yes 3800.0000 2200.0000
+ 21    0      0    9 9:9:9:3          yes 3800.0000 2200.0000
+ 22    0      0   10 10:10:10:3       yes 3800.0000 2200.0000
+ 23    0      0   11 11:11:11:3       yes 3800.0000 2200.0000
+
+```
+
+As [Bryan](https://github.com/bryansteiner/gpu-passthrough-tutorial#----cpu-pinning) puts it, "A matching core id (I.e. "CORE" Column) means that the assosciated threads (i.e. "CPU" column) run on the same physical core.
+
+If reading this information is a little scary from the terminal and you would like a GUI representation, please feel free to install `hwloc`:
+```
+$ sudo apt install hwloc
+```
+and then run it with:
+```
+$ lstopo
+```
+and you will get something that looks like:
+
+<p align="center">
+  <img width="600" height="600" src="">
+</p>
+
+We will now return to editing the XML configuration for the VM. Under the `<currentMemory>` section add the following:
+```
+...
+<currentMemory unit="KiB">16777216</currentMemory>
+<vcpu placement="static">12</vcpu>
+<cputune>
+    <vcpupin vcpu="0" cpuset="6"/>
+    <vcpupin vcpu="1" cpuset="18"/>
+    <vcpupin vcpu="2" cpuset="7"/>
+    <vcpupin vcpu="3" cpuset="19"/>
+    <vcpupin vcpu="4" cpuset="8"/>
+    <vcpupin vcpu="5" cpuset="20"/>
+    <vcpupin vcpu="6" cpuset="9"/>
+    <vcpupin vcpu="7" cpuset="21"/>
+    <vcpupin vcpu="8" cpuset="10"/>
+    <vcpupin vcpu="9" cpuset="22"/>
+    <vcpupin vcpu="10" cpuset="11"/>
+    <vcpupin vcpu="11" cpuset="23"/>
+    <emulatorpin cpuset="0-3"/>
+    <iothreadpin iothread='1' cpuset='4-5,12-17'/>
+</cputune>
+```
+
+***REMEMBER THAT YOUR PINNING IS NOT GUARANTEED TO BE ANYTHING LIKE MINE!*** Please figure our your own pinning and apply the changes.
+
+Now we will go down to the end of `</features>` and edit `<cpu>` by adding the following:
+```
+...
+  </features>
+  <cpu mode="host-passthrough" check="none" migratable="on">
+    <topology sockets="1" dies="1" cores="6" threads="2"/>
+    <cache mode="passthrough"/>
+    <feature policy="require" name="topoext"/>
+  </cpu>
+...
+```
+This is based on the topology of your CPU and will vary. This is how I set it up for my AMD Ryzen 9 3900x as it will allocate 1 socket with 6 physical cores and 2 threads per core"
+
+As [Bryan](https://github.com/bryansteiner/gpu-passthrough-tutorial#----cpu-pinning) states, "If you're wondering why I tuned my CPU configuration this way, I'll refer you to this section of the Libvirt domain XML format.16 More specifically, consider the cputune element and its underlying vcpupin, emulatorpin, and iothreadpin elements. The Arch Wiki recommends to pin the emulator and iothreads to host cores (if available) rather than the VCPUs assigned to the guest. In the example above, 12 out of my 24 threads are assigned as vCPUs to the guest and from the remaining 12 threads on the host, 4 are assigned to the emulator and 8 are assigned to an iothread see below."
+
+<h3 name="part disk">
+  If you need disk tuning:
+</h3>
+
+See how [Bryan](https://github.com/bryansteiner/gpu-passthrough-tutorial#----disk-tuning) does it.
+
+In my case I did not need or use this method so I will not be going over it.
+
+<h1 name="end">
+  Benchmarking:
+</h1>
+
+This is the end. You did it. Everything should be working. It is now up to you to find your way and tweak anything else that you may need to get your device set up and working exactly the way that you want it to. 
+
+The last thing that I did was add all of my PCI devices that controlled my USB I/O so I can have plug and play usb ports for my VM and make use of my DAC/AMP for audio instead of using the GPU. It works for me but may not work for you. So have fun and enjoy the VM.
+
+- [Windows KVM performance](https://discord.com/channels/@me/436956868905140225/813071310326464564) - 2/21/21
+- [Windows 10 Native]() - coming soon
+
+I'm hopeful that you will get great performance with your KVMs and hardware. If your CPU is not getting the performance you'd like, look over the tweaks, topology and lastly if you can addord it, overclock your CPU. I have my CPU in a custom watercooling loop so I'm pushing varying voltages and clock speeds.
+
+<h1 name="Credits/Resources">
+  Credits & Resources:
+</h1>
+
+
+- Documentation
+    - ArchWiki
+        - [QEMU](https://wiki.archlinux.org/index.php/QEMU)
+        - [KVM](https://wiki.archlinux.org/index.php/KVM)
+        - [Libvirt](https://wiki.archlinux.org/index.php/Libvirt)
+        - [PCI Passthrough](https://wiki.archlinux.org/index.php/PCI_passthrough_via_OVMF)
+        - [Kernel Parameters](https://wiki.archlinux.org/index.php/Kernel_parameters)
+    - Libvirt
+        - [VM Lifecycle](https://wiki.libvirt.org/page/VM_lifecycle)
+        - [Domain XML](https://libvirt.org/formatdomain.html)
+        - [Hooks](https://libvirt.org/hooks.html)
+        - [libvirtd](https://libvirt.org/manpages/libvirtd.html)
+        - [virsh](https://libvirt.org/manpages/virsh.html)
+        - [virtIO](https://wiki.libvirt.org/page/Virtio)
+        - [virtio-blk vs. virtio-scsi](https://mpolednik.github.io/2017/01/23/virtio-blk-vs-virtio-scsi/)
+    - Linux Kernel
+        - [KVM](https://www.kernel.org/doc/html/latest/virt/kvm/index.html)
+        - [VFIO](https://www.kernel.org/doc/html/latest/driver-api/vfio.html?highlight=vfio%20pci)
+- Tutorials
+    -
