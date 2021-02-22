@@ -760,6 +760,7 @@ I'm hopeful that you will get great performance with your KVMs and hardware. If 
   Credits & Resources:
 </h1>
 
+These are the sources I used to get my KVM running. There are a ton more and I suggest going over [Bryan's](https://github.com/bryansteiner/gpu-passthrough-tutorial/blob/master/README.md#----credits--resources) Credits/Resources to find even more if you are interested in reading more or getting a deeper understanding on how or why this works.
 
 - Documentation
     - ArchWiki
@@ -779,5 +780,11 @@ I'm hopeful that you will get great performance with your KVMs and hardware. If 
     - Linux Kernel
         - [KVM](https://www.kernel.org/doc/html/latest/virt/kvm/index.html)
         - [VFIO](https://www.kernel.org/doc/html/latest/driver-api/vfio.html?highlight=vfio%20pci)
-- Tutorials
-    -
+- Videos
+    - [GPU passthrough guide for PopOS 20.04](https://www.youtube.com/watch?v=HBEqGHCd8hk)
+- Guides
+    - [Bryan Steiners Guide](https://github.com/bryansteiner/gpu-passthrough-tutorial)
+    - [Aaron Anderson](https://github.com/aaronanderson/LinuxVMWindowsSteamVR)
+- Communities
+    - [Reddit.com/r/VFIO/](https://www.reddit.com/r/VFIO/)
+    - [KVM Fourm](https://www.youtube.com/channel/UCRCSQmAOh7yzgheq-emy1xA)
