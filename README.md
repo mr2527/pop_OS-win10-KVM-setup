@@ -20,8 +20,10 @@ If you are a seasoned UNIX/Linux/Related user, this may not be the guide for you
 
 This is a repo that contains a tutorial and the necessary scripts to create a working [Pop!\_OS 20.10 x86_64](https://pop.system76.com/) -> Windows 10 KVM.
 
-  ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/pop_Neofetch.png)
- 
+<p align="center">
+  <img width="1100" height="566" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/pop_Neofetch.png">
+</p>
+
 ^If you want **this** information then simply install [neofetch](https://github.com/dylanaraps/neofetch):
 ```
 $ sudo apt install neofetch
@@ -127,8 +129,9 @@ $ tree
 ```
 It will produce output like this:
 
-  ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/tree_example.png)
-
+<p align="center">
+  <img width="693" height="697" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/tree_example.png">
+</p>
 
 5. Basic Terminal commands. clear, ls, cd, mkdir, cp, etc.
 
@@ -199,11 +202,11 @@ $ sudo dmesg | grep AMD-Vi
 
 If you get output that looks like **this**, you should be ready.
 
-  ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/grep_AMD-Vi.png)
- 
+<p align="center">
+  <img width="949" height="226" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/grep_AMD-Vi.png">
+</p>
+
 Once this is completed you will need to pass this hardware enabled IOMMU functionality into the kernel. You can read more about [kernel parameters here](https://wiki.archlinux.org/index.php/kernel_parameters). Depending on your boot-loader you will have to figure out how to do this yourself. For me, I can use [kernelstub](https://github.com/pop-os/kernelstub). Other people use grub, GRUB2 or rEFInd.
-
-
 
 AMD:
 ```
@@ -244,7 +247,9 @@ chmod +x ./iommu2.sh
 
 For AMD systems the output will look something like this:
 
-  ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/iommu2.png)
+<p align="center">
+  <img width="1376" height="624" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/iommu2.png">
+</p>
 
 Pulled from [Bryan's guide](https://github.com/bryansteiner/gpu-passthrough-tutorial/blob/master/README.md), Intel output should look like.
 
@@ -317,7 +322,9 @@ Recognize the most important hooks
 
 I have named my VM "pop" for this example. My directory structure is:
 
-  ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/pop_tree_struct.png)
+<p align="center">
+  <img width="713" height="348" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/pop_tree_struct.png">
+</p>
 
 Now is when things get fun. Create a file named `kvm.conf`. My editor of choice is [vim](https://www.vim.org/). If you want to avoid problems when creating these files:
 ```
