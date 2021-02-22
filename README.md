@@ -262,7 +262,7 @@ chmod +x ./iommu2.sh
 For AMD systems the output will look something like this:
 
 <p align="center">
-  <img width="1200" height="600" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/iommu2.png">
+  <img width="1200" height="550" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/iommu2.png">
 </p>
 
 Pulled from [Bryan's guide](https://github.com/bryansteiner/gpu-passthrough-tutorial/blob/master/README.md), Intel output should look like.
