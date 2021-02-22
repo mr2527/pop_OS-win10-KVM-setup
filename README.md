@@ -432,7 +432,7 @@ A new window will now appear called `$VM_NAME on QEMU/KVM`. This will allow you 
 Next up we will move to the `CPUs` tab. Here we are going to change under `Configuration` make sure `Copy host cpu configuration` is *NOT* checked, change `Model` to `host-passthrough` and select `Enable available CPU security flaw mitigations`. This is to prevent Spectre/Meltdown vulnerabilities. Don't bother with Topology yet.
 
 <p align="center">
-  <img width="600" height="600" src="">
+  <img width="600" height="600" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/virt8.png">
 </p>
 
 Next up you can remove a few options from the side. ***Remove*** `Tablet`, `Channel Spice` and `Console`.
@@ -440,37 +440,37 @@ Next up you can remove a few options from the side. ***Remove*** `Tablet`, `Chan
 Select `Sata Disk 1` > `Advanced options disk bus` -> `VirtIO`
 
 <p align="center">
-  <img width="600" height="600" src="">
+  <img width="600" height="600" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/virt9.png">
 </p>
 
 Navigate to `NIC` and change Device model to `virtio`
 
 <p align="center">
-  <img width="600" height="600" src="">
+  <img width="600" height="600" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/virt10.png">
 </p>
 
 `Add Hardware`, add `Channel Device`, keep the default name, choose `Device type - Unix Socket`.
 
 <p align="center">
-  <img width="600" height="600" src="">
+  <img width="600" height="600" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/virt11.png">
 </p>
 
 `Add Hardware`, Storage, Browse, Browse Local, choose `virtio-win-0.1.185.iso`.
 
 <p align="center">
-  <img width="600" height="600" src="">
+  <img width="600" height="600" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/virt12.png">
 </p>
 
 `Add Hardware`, PCI host device, (in my case I added), `PCI host device, 0b:00.0 NVIDIA Corporation Device`, you will need to find your appropriate grouping with your `VFIO-pci driver`. This is my GPU visuals
 
 <p align="center">
-  <img width="600" height="600" src="">
+  <img width="600" height="600" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/virt13.png">
 </p>
 
 `Add Hardware`, PCI host device, (in my case I added), `PCI host device, 0b:00.1 NVIDIA Corporation Device`, you will need to find your appropriate grouping with your `VFIO-pci driver`. This is my GPU audio.
 
 <p align="center">
-  <img width="600" height="600" src="">
+  <img width="600" height="600" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/virt14.png">
 </p>
 
 Now if you want to pass in and USB Host Devices feel free to add whatever ones you want. I did this and changed it later to pass in the entire PCI device.
@@ -478,7 +478,7 @@ Now if you want to pass in and USB Host Devices feel free to add whatever ones y
 Now we are going to have to get our hands dirty with editing the XML file. Go to `Virtual Machine Manager`, select `edit` -> `preferences` -> `General` -> `Enable XML editing` and now you can navigate to the `$VM_NAME on QEMU/KVM` window and then select `Overview` -> `XML`.
 
 <p align="center">
-  <img width="600" height="600" src="">
+  <img width="600" height="600" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/virt15.png">
 </p>
 
 If you are passing in an NVIDIA GPU to the VM you may run into [Error 43](https://passthroughpo.st/apply-error-43-workaround/). This is because NVIDIA doesn't enable virtualization on their GeForce cards. The workaround is to have hypervisor hide its existence. From here navigate to the `<hyperv>` section and add this.
@@ -692,7 +692,7 @@ $ lstopo
 and you will get something that looks like:
 
 <p align="center">
-  <img width="600" height="600" src="">
+  <img width="600" height="600" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/lstopo.png">
 </p>
 
 We will now return to editing the XML configuration for the VM. Under the `<currentMemory>` section add the following:
