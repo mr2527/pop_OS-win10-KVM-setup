@@ -35,7 +35,7 @@ If you are a seasoned UNIX/Linux/Related user, this may not be the guide for you
 This is a repo that contains a tutorial and the necessary scripts to create a working [Pop!\_OS 20.10 x86_64](https://pop.system76.com/) -> Windows 10 KVM.
 
 <p align="center">
-  <img width="1100" height="566" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/pop_Neofetch.png">
+  <img width="1000" height="500" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/pop_Neofetch.png">
 </p>
 
 ^If you want **this** information, install [neofetch](https://github.com/dylanaraps/neofetch):
