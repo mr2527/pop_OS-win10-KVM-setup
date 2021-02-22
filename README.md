@@ -1,8 +1,22 @@
 # pop!_OS-win10-KVM-setup
 
 <h1 name="WIP">
-  THIS IS A WORK IN PROGRESS GUIDE. LAST UPDATE: 02/21/21
+  THIS IS A WORK IN PROGRESS GUIDE. LAST UPDATE: 02/21/21 11:00 PM EST
 </h1>
+
+<h2>
+    Table of Contents:
+</h2>
+
+* [PREFACE](#preface)
+    * [Introduction:](#introduction)
+        * [Reasoning/Consideration:](#reasoning/considerations)
+        * [Guides](#Guides)
+            * [Bryan's Guide](#Bryan's_Guide)
+            * [Aaron's Guide](#Aarons's_Guide)
+        * [Hardware Setup](#Hardware_setup)
+        * [Hardware Requirements](#hardware_requirements)
+        * [Tips/Tricks:](tips/tricks)
 
 <h5 name="help">
   Spelling and grammar assistance by my buddy Isaiah, thank you.
@@ -31,13 +45,13 @@ $ neofetch
 ```
 
 <h2 name="introduction">
-  Introduction
+  Introduction:
 </h2>
 
 This KVM for Windows 10 will allow for PCIE and SATA devices to be passed through and used while having minimal performance loss that is directly comparable to bare metal performance.
 
 <h3 name="reasoning/considerations">
-  Reasoning/Consideration
+  Reasoning/Consideration:
 </h3>
 
 My reasoning for creating this was because at the time, I was and still am a newer Linux user that is also a gamer. I did not want to abandon my chances of gaming with my want of moving over to a better development environment. I also did not want to necessarily deal with the annoying dual booting that I have. It's just easier to pull my hair out for a few days and learn to set this up than dual booting.
@@ -52,7 +66,7 @@ Please consider checking out these guides to find out where I was able to get my
 
 This guide is designed to pull information from both sub-guides. All other guides will be referenced appropriately.
 
-<h4 name="Bryan's Guide">
+<h4 name="Bryan's_Guide">
   Bryan's Guide:
 </h4>
 
@@ -60,7 +74,7 @@ This guide is designed to pull information from both sub-guides. All other guide
 
 [Bryan's Guide](https://github.com/bryansteiner/gpu-passthrough-tutorial)
 
-<h4 name="Aarons's Guide">
+<h4 name="Aarons's_Guide">
   Aarons's Guide:
 </h4>
 
@@ -73,8 +87,8 @@ Below is a breakdown of my exact PC hardware setup. Please be aware that **there
 
 **I am on an AMD/NVIDIA build but I will try to help Intel users as well, but your mileage may vary.**
 
-<h3 name="hardware_setup">
-    Hardware Setup
+<h3 name="Hardware_setup">
+    Hardware Setup:
 </h3>
 
 - CPU:
@@ -101,9 +115,9 @@ Below is a breakdown of my exact PC hardware setup. Please be aware that **there
 * [Hardware that can support IOMMU](https://en.wikipedia.org/wiki/List_of_IOMMU-supporting_hardware) (Please read before proceeding).
 * A monitor with more than one input or more than one monitor (Will be discussed later).
 
-<h2 name="tips/tricks">
+<h3 name="tips/tricks">
     Tips/Tricks:
-</h2>
+</h3>
 
 1. If you are tired of having to enter a password for each `sudo` you do, do the following:
 ```
