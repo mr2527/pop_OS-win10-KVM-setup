@@ -731,7 +731,7 @@ Now we will go down to the end of `</features>` and edit `<cpu>` by adding the f
   </cpu>
 ...
 ```
-This is based on the topology of your CPU and will vary. This is how I set it up for my AMD Ryzen 9 3900x as it will allocate 1 socket with 6 physical cores and 2 threads per core"
+This is based on the topology of your CPU and will vary. This is how I set it up for my AMD Ryzen 9 3900x as it will allocate 1 socket with 6 physical cores and 2 threads per core.
 
 As [Bryan](https://github.com/bryansteiner/gpu-passthrough-tutorial#----cpu-pinning) states, "If you're wondering why I tuned my CPU configuration this way, I'll refer you to this section of the Libvirt domain XML format.16 More specifically, consider the cputune element and its underlying vcpupin, emulatorpin, and iothreadpin elements. The Arch Wiki recommends to pin the emulator and iothreads to host cores (if available) rather than the VCPUs assigned to the guest. In the example above, 12 out of my 24 threads are assigned as vCPUs to the guest and from the remaining 12 threads on the host, 4 are assigned to the emulator and 8 are assigned to an iothread see below."
 
@@ -751,7 +751,7 @@ This is the end. You did it. Everything should be working. It is now up to you t
 
 The last thing that I did was add all of my PCI devices that controlled my USB I/O so I can have plug and play usb ports for my VM and make use of my DAC/AMP for audio instead of using the GPU. It works for me but may not work for you. So have fun and enjoy the VM.
 
-- [Windows KVM performance](https://discord.com/channels/@me/436956868905140225/813071310326464564) - 2/21/21
+- [Windows KVM performance](https://www.userbenchmark.com/UserRun/40099278) - 2/21/21
 - [Windows 10 Native]() - coming soon
 
 I'm hopeful that you will get great performance with your KVMs and hardware. If your CPU is not getting the performance you'd like, look over the tweaks, topology and lastly if you can addord it, overclock your CPU. I have my CPU in a custom watercooling loop so I'm pushing varying voltages and clock speeds.
