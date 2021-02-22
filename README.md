@@ -16,7 +16,7 @@ You don't *need* strong terminal skills to do this, but it is highly suggested t
 
 I have moderately strong terminal knowledge so this was a breeze for me, but I entirely understand new users who are wanting to get into the KVM environment after switching to Linux for the myriad of reasons that one may have(I don't blame you for moving. [Welcome to Linux!](https://livebook.manning.com/book/linux-in-action/chapter-1/10)).
 
-If you are a seasoned UNIX/Linux/Related user, this may not be the guide for you as there will be a lot of simple hand holding information here. In that case might I suggest going to the [Arch](https://wiki.archlinux.org/index.php/KVM) KVM wiki or alternatively going to the guides listed [below](https://github.com/mr2527/pop_OS-win10-KVM-setup#--guides).
+If you are a seasoned UNIX/Linux/Related user, this may not be the guide for you as there will be a lot of verbose information here. In that case, I suggest going to the [Arch](https://wiki.archlinux.org/index.php/KVM) KVM wiki or alternatively going to the guides listed [below](https://github.com/mr2527/pop_OS-win10-KVM-setup#--guides).
 
 This is a repo that contains a tutorial and the necessary scripts to create a working [Pop!\_OS 20.10 x86_64](https://pop.system76.com/) -> Windows 10 KVM.
 
@@ -24,7 +24,7 @@ This is a repo that contains a tutorial and the necessary scripts to create a wo
   <img width="1100" height="566" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/pop_Neofetch.png">
 </p>
 
-^If you want **this** information then simply install [neofetch](https://github.com/dylanaraps/neofetch):
+^If you want **this** information, install [neofetch](https://github.com/dylanaraps/neofetch):
 ```
 $ sudo apt install neofetch
 $ neofetch
@@ -40,9 +40,9 @@ This KVM for Windows 10 will allow for PCIE and SATA devices to be passed throug
   Reasoning/Consideration
 </h3>
 
-My reasoning for creating this was because at the time, I was and still am a new Linux user that is also a big gamer. I did not want to abandon my chances of gaming with my want of moving over to a better development environment. I also did not want to necessarily deal with the annoying dual booting that I have. It's just easier to pull my hair out for a few days and learn to set this up than dual booting.
+My reasoning for creating this was because at the time, I was and still am a newer Linux user that is also a gamer. I did not want to abandon my chances of gaming with my want of moving over to a better development environment. I also did not want to necessarily deal with the annoying dual booting that I have. It's just easier to pull my hair out for a few days and learn to set this up than dual booting.
 
-I spent nearly a week sifting through various guides getting this to environment to work (properly) on my desktop, and I want to share the tips and tricks I've learned along the way and present a digestible way to getting your KVM / Virt-Manager set up (for windows 10) for inexperienced users. Some guides would get me halfway and then wouldn't provide me with enough information on where to go next. Then I would find a different guide that summed up the first up but left delicate details out. All the guides I have read however are great and I want to give recognition to the individuals that helped me get this environment to work.
+I spent nearly a week sifting through various guides getting this environment to work (properly) on my desktop, and I want to share the tips and tricks I've learned along the way and present a digestible way to getting your KVM / Virt-Manager set up (for windows 10) for inexperienced users. Some guides would get me halfway and then would not provide me with enough information on where to go next. Then I would find a different guide that summed up the first but left delicate details out. All the guides I have read however are great and I want to give recognition to the individuals that helped me get this environment to work.
 
 <h3 name="Guides">
   Guides:
@@ -69,7 +69,7 @@ This guide is designed to pull information from both sub-guides. All other guide
 [Aaron's Guide](https://github.com/aaronanderson/LinuxVMWindowsSteamVR)
 
 
-Below is a breakdown of my exact PC Setup. Please be aware that **there are differences** between AMD and Intel builds regarding BIOS options and selecting the correct options.
+Below is a breakdown of my exact PC hardware setup. Please be aware that **there are differences** between AMD and Intel builds regarding BIOS options and selecting the correct options.
 
 **I am on an AMD/NVIDIA build but I will try to help Intel users as well, but your mileage may vary.**
 
@@ -94,7 +94,7 @@ Below is a breakdown of my exact PC Setup. Please be aware that **there are diff
     - [ADATA SSD 1TB - SSD](https://www.amazon.com/ADATA-Ultimate-Su800-Internal-ASU800SS-1TT-C/dp/B01K8A29E6) (Passthrough)
 
 <h3 name="hardware_requirements">
-  Hardware Requirements
+  Hardware Requirements:
 </h3>
 
 * Two graphics cards. (One for host system, One for guest system (passthrough))
@@ -102,10 +102,10 @@ Below is a breakdown of my exact PC Setup. Please be aware that **there are diff
 * A monitor with more than one input or more than one monitor (Will be discussed later).
 
 <h2 name="tips/tricks">
-    Tips/Tricks
+    Tips/Tricks:
 </h2>
 
-1. If you are tired of having to enter a password for each sudo you do just do the following:
+1. If you are tired of having to enter a password for each `sudo` you do, do the following:
 ```
 $ sudo -i
 ```
@@ -153,7 +153,7 @@ $ sudo apt-get dist-upgrade
 ```
 
 2. Download virtIO ISO files (***MANDATORY***)
-Since this project is a KVM for Windows 10, you are required to download and use virtIO drivers. [virtIO] is a virtualization standard for network/disk device drivers. The addition of virtIO can be done by attaching the ISO to the windows VM in the application Virt-Manager (we will get this later). [Get the virtIO drivers here](https://docs.fedoraproject.org/en-US/quick-docs/creating-windows-virtual-machines-using-virtio-drivers/#virtio-win-direct-downloads)
+Since this project is a KVM for Windows 10, you are required to download and use virtIO drivers. [virtIO](https://www.linux-kvm.org/page/Virtio) is a virtualization standard for network/disk device drivers. The addition of virtIO can be done by attaching the ISO to the windows VM in the application Virt-Manager (we will get this later). [Get the virtIO drivers here](https://docs.fedoraproject.org/en-US/quick-docs/creating-windows-virtual-machines-using-virtio-drivers/#virtio-win-direct-downloads)
 
 3. Download Windows 10 ISO files (***MANDATORY***)
 Since we are going to be creating a *Windows* kvm, you need the ISO for it. [Get the latest Windows 10 ISO here](https://www.microsoft.com/en-us/software-download/windows10ISO)
@@ -161,7 +161,7 @@ Since we are going to be creating a *Windows* kvm, you need the ISO for it. [Get
 4. ***OPTIONAL***:
 
 <h4 name="AMD optional">
-  If you own an AMD graphics card that you will be passing through:
+  If you own an AMD graphics card as host:
 </h4>
 
 You don't *need* the Vulkan Drivers but if you want the best performance you can get on the host if it uses an AMD GPU I highly suggest this. Ubuntu comes with `mesa-vulkan-drivers` which offer comparable or better performance but you can get the AMD Vulkan drivers here:
@@ -270,7 +270,6 @@ If you have the problem presented in the Intel example, you have 2 options:
 1. You can try swapping which PCI slot the graphics cards are in. This may or may not provide the expected results.
 2. Alternatively you can conduct an [ACS Override Patch](https://queuecumber.gitlab.io/linux-acs-override/). It's *highly* worth it to read this post from [Alex Williamson](https://vfio.blogspot.com/2014/08/iommu-groups-inside-and-out.html). "Applying the ACS Override Patch may compromise system security. Check out this post to see why the ACS patch will probably never make its way upstream to the mainline kernel."
 
-
 <h4 name="part 1.1">
     ACS Override Patch (Optional):
 </h4>
@@ -278,7 +277,6 @@ If you have the problem presented in the Intel example, you have 2 options:
 **PLEASE go to [Bryan's guide](https://github.com/bryansteiner/gpu-passthrough-tutorial/blob/master/README.md) and read how to do it there and understand the complications and implications.**
 
 Since I did not need that part I will be skipping it. The next steps are applicable if you need the patch or not. Dynamic binding is not necessarily required. But it works in my case so I suggest looking into it. I will provide instructions below.
-
 
 <h2 name="VM logistics">
 ***OPTIONAL*** VM Dynamic Binding
