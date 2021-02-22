@@ -588,7 +588,7 @@ The important bit is the `<rom bar="on" file="/etc/firmware/EVGA.RTX3070.8192.20
   IF YOUR GPU DOESN'T STICK WITH `vfio-pci` DRIVERS:
 </h2>
 
-This is a problem that some may experience and I do not have the answer to why it happens but I have a remedy to fix it. Download [this script and run it](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Scripts/popos_helper.sh). This will make whatever the secondary GPU is and bind it with the required `vfio-pci` drivers. Once downloaded and ran, reboot and check if you have your `vfio-pci` drivers by running the `iommu2.sh` file I provided. I found this script through the video: [GPU passthrough guide for PopOS 20.04](https://www.youtube.com/watch?v=HBEqGHCd8hk) by [Pavol Elsig](https://www.youtube.com/channel/UCToFb-mcTsoyyf3muma9r9w). >Pavol, if you are reading this, thank you for the great video. (This worked for me as of my current pop! version. YMMV).
+This is a problem that some may experience and I do not have the answer to why it happens but I have a remedy to fix it. Download [this script and run it](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Scripts/popos_helper.sh). This will make whatever the secondary GPU is and bind it with the required `vfio-pci` drivers. Once downloaded and run, reboot and check if you have your `vfio-pci` drivers by running the `iommu2.sh` file I provided. I found this script through the video: [GPU passthrough guide for PopOS 20.04](https://www.youtube.com/watch?v=HBEqGHCd8hk) by [Pavol Elsig](https://www.youtube.com/channel/UCToFb-mcTsoyyf3muma9r9w). >Pavol, if you are reading this, thank you for the great video. (This worked for me as of my current pop! version. YMMV).
 
 <h2 name="idk">
   Start the VM
@@ -627,7 +627,7 @@ to save it.
 
 Boot into your VM and double check the drivers. Make sure everything is working correctly. 
 
-Now we can begin editing the XML for some changed that will boost performance!
+Now we can begin editing the XML for some changes that will boost performance!
 
 Navigate to `Overview` -> `XML` we got some dirty work to do.
 
@@ -652,7 +652,7 @@ Now apply. These new insertions should stay. If you did it incorrectly they will
 </h3>
 
 Now we have to learn how to do some CPU pinning ONLY if you have a multithreaded capable CPU.
-VMs are incapable of distinguishing between physicsl and logical cores (threads). Virt-manager can see that 24 vCPUs exist and are available but the host has two cores mapped to a single physical core on the physical CPU die. If you want a terminal view of the cores run the command:
+VMs are incapable of distinguishing between physical and logical cores (threads). Virt-manager can see that 24 vCPUs exist and are available but the host has two cores mapped to a single physical core on the physical CPU die. If you want a terminal view of the cores run the command:
 ```
 $ lscpu -e
 ```
@@ -686,7 +686,7 @@ CPU NODE SOCKET CORE L1d:L1i:L2:L3 ONLINE    MAXMHZ    MINMHZ
 
 ```
 
-As [Bryan](https://github.com/bryansteiner/gpu-passthrough-tutorial#----cpu-pinning) puts it, "A matching core id (I.e. "CORE" Column) means that the assosciated threads (i.e. "CPU" column) run on the same physical core.
+As [Bryan](https://github.com/bryansteiner/gpu-passthrough-tutorial#----cpu-pinning) puts it, "A matching core id (I.e. "CORE" Column) means that the associated threads (i.e. "CPU" column) run on the same physical core.
 
 If reading this information is a little scary from the terminal and you would like a GUI representation, please feel free to install `hwloc`:
 ```
@@ -725,7 +725,7 @@ We will now return to editing the XML configuration for the VM. Under the `<curr
 </cputune>
 ```
 
-***REMEMBER THAT YOUR PINNING IS NOT GUARANTEED TO BE ANYTHING LIKE MINE!*** Please figure our your own pinning and apply the changes.
+***REMEMBER THAT YOUR PINNING IS NOT GUARANTEED TO BE ANYTHING LIKE MINE!*** Please figure out your own pinning and apply the changes.
 
 Now we will go down to the end of `</features>` and edit `<cpu>` by adding the following:
 ```
@@ -756,12 +756,12 @@ In my case I did not need or use this method so I will not be going over it.
 
 This is the end. You did it. Everything should be working. It is now up to you to find your way and tweak anything else that you may need to get your device set up and working exactly the way that you want it to. 
 
-The last thing that I did was add all of my PCI devices that controlled my USB I/O so I can have plug and play usb ports for my VM and make use of my DAC/AMP for audio instead of using the GPU. It works for me but may not work for you. So have fun and enjoy the VM.
+The last thing that I did was add all of my PCI devices that controlled my USB I/O so I can plug and play usb ports for my VM and make use of my DAC/AMP for audio instead of using the GPU. It works for me but may not work for you. So have fun and enjoy the VM.
 
 - [Windows KVM performance](https://www.userbenchmark.com/UserRun/40099278) - 2/21/21
 - [Windows 10 Native]() - coming soon
 
-I'm hopeful that you will get great performance with your KVMs and hardware. If your CPU is not getting the performance you'd like, look over the tweaks, topology and lastly if you can addord it, overclock your CPU. I have my CPU in a custom watercooling loop so I'm pushing varying voltages and clock speeds.
+I'm hopeful that you will get great performance with your KVMs and hardware. If your CPU is not getting the performance you'd like, look over the tweaks, topology and lastly if you can afford it, overclock your CPU. I have my CPU in a custom watercooling loop so I'm pushing varying voltages and clock speeds.
 
 <h1 name="Credits/Resources">
   Credits & Resources:
@@ -795,3 +795,6 @@ These are the sources I used to get my KVM running. There are a ton more and I s
 - Communities
     - [Reddit.com/r/VFIO/](https://www.reddit.com/r/VFIO/)
     - [KVM Fourm](https://www.youtube.com/channel/UCRCSQmAOh7yzgheq-emy1xA)
+
+
+
