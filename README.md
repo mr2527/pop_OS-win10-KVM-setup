@@ -21,7 +21,7 @@ If you are a seasoned UNIX/Linux/Related user, this may not be the guide for you
 This is a repo that contains a tutorial and the necessary scripts to create a working [Pop!\_OS 20.10 x86_64](https://pop.system76.com/) -> Windows 10 KVM.
 
   ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/pop_Neofetch.png)
-  
+ 
 ^If you want **this** information then simply install [neofetch](https://github.com/dylanaraps/neofetch):
 ```
 $ sudo apt install neofetch
@@ -32,13 +32,13 @@ $ neofetch
   Introduction
 </h2>
 
-This KVM for Windows 10 will allow for PCIE and SATA devices to be passed through and used while having minimal performance loss that is directly comparable to bare metal performance. 
+This KVM for Windows 10 will allow for PCIE and SATA devices to be passed through and used while having minimal performance loss that is directly comparable to bare metal performance.
 
 <h3 name="reasoning/considerations">
   Reasoning/Consideration
 </h3>
 
-My reasoning for creating this was because at the time, I was and still am a new Linux user that is also a big gamer. I did not want to abandon my chances of gaming with my want of moving over to a better development environment. I also did not want to necessarily deal with the annoying dual booting that I have. It's just easier to pull my hairs out for a few days and learn to setup this than dual booting.
+My reasoning for creating this was because at the time, I was and still am a new Linux user that is also a big gamer. I did not want to abandon my chances of gaming with my want of moving over to a better development environment. I also did not want to necessarily deal with the annoying dual booting that I have. It's just easier to pull my hair out for a few days and learn to set this up than dual booting.
 
 I spent nearly a week sifting through various guides getting this to environment to work (properly) on my desktop, and I want to share the tips and tricks I've learned along the way and present a digestible way to getting your KVM / Virt-Manager set up (for windows 10) for inexperienced users. Some guides would get me halfway and then wouldn't provide me with enough information on where to go next. Then I would find a different guide that summed up the first up but left delicate details out. All the guides I have read however are great and I want to give recognition to the individuals that helped me get this environment to work.
 
@@ -67,7 +67,7 @@ This guide is designed to pull information from both sub-guides. All other guide
 [Aaron's Guide](https://github.com/aaronanderson/LinuxVMWindowsSteamVR)
 
 
-Below is a breakdown of my exact PC Setup. Please be aware that **there are differences** between AMD and Intel builds regarding BIOS options and selecting the correct options. 
+Below is a breakdown of my exact PC Setup. Please be aware that **there are differences** between AMD and Intel builds regarding BIOS options and selecting the correct options.
 
 **I am on an AMD/NVIDIA build but I will try to help Intel users as well, but your mileage may vary.**
 
@@ -153,7 +153,7 @@ $ sudo apt-get dist-upgrade
 Since this project is a KVM for Windows 10, you are required to download and use virtIO drivers. [virtIO] is a virtualization standard for network/disk device drivers. The addition of virtIO can be done by attaching the ISO to the windows VM in the application Virt-Manager (we will get this later). [Get the virtIO drivers here](https://docs.fedoraproject.org/en-US/quick-docs/creating-windows-virtual-machines-using-virtio-drivers/#virtio-win-direct-downloads)
 
 3. Download Windows 10 ISO files (***MANDATORY***)
-Since we are going to be creating a *Windows* kvm, you need the ISO for it. [Get the lastest Windows 10 ISO here](https://www.microsoft.com/en-us/software-download/windows10ISO)
+Since we are going to be creating a *Windows* kvm, you need the ISO for it. [Get the latest Windows 10 ISO here](https://www.microsoft.com/en-us/software-download/windows10ISO)
 
 4. ***OPTIONAL***:
 
@@ -200,7 +200,7 @@ $ sudo dmesg | grep AMD-Vi
 If you get output that looks like **this**, you should be ready.
 
   ![alt text](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/grep_AMD-Vi.png)
-  
+ 
 Once this is completed you will need to pass this hardware enabled IOMMU functionality into the kernel. You can read more about [kernel parameters here](https://wiki.archlinux.org/index.php/kernel_parameters). Depending on your boot-loader you will have to figure out how to do this yourself. For me, I can use [kernelstub](https://github.com/pop-os/kernelstub). Other people use grub, GRUB2 or rEFInd.
 
 
@@ -227,16 +227,16 @@ Intel:
 GRUB_CMDLINE_LINUX_DEFAULT="quiet splash amd_iommu=on"
 ```
 
-As mentioned in [Bryan's guide](https://github.com/bryansteiner/gpu-passthrough-tutorial/blob/master/README.md), when planning the GPU passthrough setup, it was said to blacklist the NVIDIA/AMD drivers. "The logic stems from the fact that since the native drivers can't attach to the GPU at boot-time, the GPU will be freed-up and available to bind to the vfio drivers instead." The tutorials will make you add a parameter called `pci-stub` with the PCI bus ID of the GPU you wish to use. I did not follow this approach and instead dynamically unbind the drivers and bind `VFIO-PCI` drivers to it. Alternatively, you can run this script to bind the `VFIO-PCI` drivers to the secondary card in your PC. But it is important to understand IOMMU groupings. The script provided by [Bryan here](https://github.com/bryansteiner/gpu-passthrough-tutorial/blob/master/kvm/scripts/iommu.sh) is perfectly adequate for finding IOMMU groups, but I found [this script](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Scripts/iommu2.sh) to be better. 
+As mentioned in [Bryan's guide](https://github.com/bryansteiner/gpu-passthrough-tutorial/blob/master/README.md), when planning the GPU passthrough setup, it was said to blacklist the NVIDIA/AMD drivers. "The logic stems from the fact that since the native drivers can't attach to the GPU at boot-time, the GPU will be freed-up and available to bind to the vfio drivers instead." The tutorials will make you add a parameter called `pci-stub` with the PCI bus ID of the GPU you wish to use. I did not follow this approach and instead dynamically unbind the drivers and bind `VFIO-PCI` drivers to it. Alternatively, you can run this script to bind the `VFIO-PCI` drivers to the secondary card in your PC. But it is important to understand IOMMU groupings. The script provided by [Bryan here](https://github.com/bryansteiner/gpu-passthrough-tutorial/blob/master/kvm/scripts/iommu.sh) is perfectly adequate for finding IOMMU groups, but I found [this script](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Scripts/iommu2.sh) to be better.
 
-The reason we want to use either script is to find the devices we want to passthrough (storage drivers, PCIe hardware, etc). [IOMMU](https://en.wikipedia.org/wiki/Input%E2%80%93output_memory_management_unit) is a reference to the chipset device that maps virtual addresses to physical addresses on the input/output of the devices. At the end of this step we want to make sure that we have appropriate IOMMU groupings. The reason for this is you cannot separate the groupings.
+The reason we want to use either script is to find the devices we want to pass through (storage drivers, PCIe hardware, etc). [IOMMU](https://en.wikipedia.org/wiki/Input%E2%80%93output_memory_management_unit) is a reference to the chipset device that maps virtual addresses to physical addresses on the input/output of the devices. At the end of this step we want to make sure that we have appropriate IOMMU groupings. The reason for this is you cannot separate the groupings.
 
 Run the script:
 ```
 ./iommu2.sh
 ```
 
-If you cannot run the script, with or withou sudo, then you should run:
+If you cannot run the script, with or without sudo, then you should run:
 ```
 chmod +x ./iommu2.sh
 ```
@@ -263,7 +263,7 @@ IOMMU Group 1 02:00.1 Audio device [0403]: Advanced Micro Devices, Inc. [AMD/ATI
 
 If you have the problem presented in the Intel example, you have 2 options:
 1. You can try swapping which PCI slot the graphics cards are in. This may or may not provide the expected results.
-2. Alternatively you can conduct an [ACS Override Patch](https://queuecumber.gitlab.io/linux-acs-override/). It's *highly* worth it to read this post from [Alex Williamson](https://vfio.blogspot.com/2014/08/iommu-groups-inside-and-out.html). "Applying the ACS Override Patch may compromise system security. Check out this post to see why the ACS patch will probably never make its way upstream to the mainline kernel." 
+2. Alternatively you can conduct an [ACS Override Patch](https://queuecumber.gitlab.io/linux-acs-override/). It's *highly* worth it to read this post from [Alex Williamson](https://vfio.blogspot.com/2014/08/iommu-groups-inside-and-out.html). "Applying the ACS Override Patch may compromise system security. Check out this post to see why the ACS patch will probably never make its way upstream to the mainline kernel."
 
 
 <h4 name="part 1.1">
@@ -272,13 +272,13 @@ If you have the problem presented in the Intel example, you have 2 options:
 
 **PLEASE go to [Bryan's guide](https://github.com/bryansteiner/gpu-passthrough-tutorial/blob/master/README.md) and read how to do it there and understand the complications and implications.**
 
-Since I did not need that part I will be skipping it. The next steps are applicable if you needed the patch or not. Dynamic binding is not necesarrily required. But it works in my case so I suggest looking into it. I will provide instructions below.
+Since I did not need that part I will be skipping it. The next steps are applicable if you need the patch or not. Dynamic binding is not necessarily required. But it works in my case so I suggest looking into it. I will provide instructions below.
 
 
 <h2 name="VM logistics">
 ***OPTIONAL*** VM Dynamic Binding
 </h2>
-How: Libvirt has a hook [Libvirt hooks](https://libvirt.org/hooks.html) system that grants you access to running commands on startup or shutdown of the VM. The scripts that are located within the directory `/etc/libvirt/hooks`. If the directory cannot be found or does not exist, create it. 
+How: Libvirt has a hook [Libvirt hooks](https://libvirt.org/hooks.html) system that grants you access to running commands on startup or shutdown of the VM. The scripts that are located within the directory `/etc/libvirt/hooks`. If the directory cannot be found or does not exist, create it.
 
 ```
 $ sudo mkdir /etc/libvirt/hooks
@@ -335,9 +335,9 @@ These are how my groupings are made so you are **required* to find your correct 
 $ ./iommu2.sh
 ```
 
-The output of the script will translate the address for each device. Ex: `IOMMU group 27 0b:00.0` which is written as --> `VIRSH_GPU_VIDEO=pci_0000_0b_00_0`. You will need to figure this out on your own! 
+The output of the script will translate the address for each device. Ex: `IOMMU group 27 0b:00.0` which is written as --> `VIRSH_GPU_VIDEO=pci_0000_0b_00_0`. You will need to figure this out on your own!
 
-Once you got the currect bus addresses you can then move on to create some scripts:
+Once you got the current bus addresses you can then move on to create some scripts:
 
 `bind_vfio.sh`:
 ```
@@ -397,7 +397,7 @@ You can now start [Virt-Manager](https://virt-manager.org/), you will be present
   <img width="600" height="600" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/virt1.png">
 </p>
 
-Click on the screen with yellow light icon or navigate to `File > Add Connection`. You will be presented with this screen. Choose `Local install media (ISO image or CDROM)` and select `Forward`. You will then see:
+Click on the screen with a yellow light icon or navigate to `File > Add Connection`. You will be presented with this screen. Choose `Local install media (ISO image or CDROM)` and select `Forward`. You will then see:
 
 <p align="center">
   <img width="600" height="600" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/virt2.png">
@@ -415,7 +415,7 @@ You will now configure your Memory (RAM) and CPU settings. In my case, I will de
   <img width="600" height="600" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/virt4.png">
 </p>
 
-In this case you will be creating a custom storage for the Windows install. Select `Enable storage for this virtual machine` and then `Select or create custom storage` and then navigate the Storage Volume menu and create a storage volume with any size above 50GB. In this case you want to create a storage volume with any name you would like and with a format of `qcow2` the rest doesn't matter. It can be stored wherever you like. Once created select it and proceed with `Choose Volume` and lastly go `Forward`. 
+In this case you will be creating a custom storage for the Windows install. Select `Enable storage for this virtual machine` and then `Select or create custom storage` and then navigate the Storage Volume menu and create a storage volume with any size above 50GB. In this case you want to create a storage volume with any name you would like and with a format of `qcow2` the rest doesn't matter. It can be stored wherever you like. Once created select it and proceed with `Choose Volume` and lastly go `Forward`.
 
 <p align="center">
   <img width="600" height="600" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/virt6.png">
@@ -429,13 +429,13 @@ A new window will now appear called `$VM_NAME on QEMU/KVM`. This will allow you 
   <img width="600" height="600" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/virt7.png">
 </p>
 
-Next up we will move to the `CPUs` tab. Here we are going to change under `Configuration` make sure `Copy host cpu configuration` is *NOT* checked, change `Model` to `host-passthrough` and select `Enable available CPU security flaw mitigations`. This is to prevent against Spectre/Meltdown vulnerabilities. Don't bother with Topology yet. 
+Next up we will move to the `CPUs` tab. Here we are going to change under `Configuration` make sure `Copy host cpu configuration` is *NOT* checked, change `Model` to `host-passthrough` and select `Enable available CPU security flaw mitigations`. This is to prevent Spectre/Meltdown vulnerabilities. Don't bother with Topology yet.
 
 <p align="center">
   <img width="600" height="600" src="">
 </p>
 
-Next up you can remove a few options from the side. ***Remove*** `Tablet`, `Channel Spice` and `Console`. 
+Next up you can remove a few options from the side. ***Remove*** `Tablet`, `Channel Spice` and `Console`.
 
 Select `Sata Disk 1` > `Advanced options disk bus` -> `VirtIO`
 
@@ -473,7 +473,7 @@ Navigate to `NIC` and change Device model to `virtio`
   <img width="600" height="600" src="">
 </p>
 
-Now if you want to pass in and USB Host Devices feel free to add whatever ones you want. I did this and changed it later to pass in the entire PCI device. 
+Now if you want to pass in and USB Host Devices feel free to add whatever ones you want. I did this and changed it later to pass in the entire PCI device.
 
 Now we are going to have to get our hands dirty with editing the XML file. Go to `Virtual Machine Manager`, select `edit` -> `preferences` -> `General` -> `Enable XML editing` and now you can navigate to the `$VM_NAME on QEMU/KVM` window and then select `Overview` -> `XML`.
 
@@ -496,7 +496,7 @@ If you are passing in an NVIDIA GPU to the VM you may run into [Error 43](https:
 </features>
 ```
 
-Next drectly under the `</hyperv>` line add
+Next directly under the `</hyperv>` line add
 ```
 <features>
     ...
@@ -524,9 +524,9 @@ Error 43 should no longer occur.
   Installing Windows 10 in the VM
 </h2>
 
-This section will detail on how to install the Windows 10 VM and get ready to move forward with tweaks and updates to get your performance better. I will be pulling from [Aaron's guide](https://github.com/aaronanderson/LinuxVMWindowsSteamVR#windows-installation---part-1) in this section. 
+This section will detail on how to install the Windows 10 VM and get ready to move forward with tweaks and updates to get your performance better. I will be pulling from [Aaron's guide](https://github.com/aaronanderson/LinuxVMWindowsSteamVR#windows-installation---part-1) in this section.
 
-START the VM. Click into the VM window and it should have your mouse and keyboard take over the window. Press enter when you are prompted to boot from the CDROM. There is a chance you weren't fast enough and then you be shown the UEFI shell. If this is the case, type `exit` or go to `boot manager` -> `UEFI QEMU DCDROM QM03` (There may be more than 1 zero if yours).
+START the VM. Click into the VM window and it should have your mouse and keyboard take over the window. Press enter when you are prompted to boot from the CDROM. There is a chance you weren't fast enough and then you are shown the UEFI shell. If this is the case, type `exit` or go to `boot manager` -> `UEFI QEMU CDROM QM03` (There may be more than 1 zero if yours).
 
 Select 'I don't have a product key' I highly suggest *not* putting a windows code in unless you are 100% completed with your installation and are fine with the performance. Reinstallation is not out of the ordinary.
 
@@ -574,4 +574,46 @@ Now navigate back to your virt-manager and find the PCI device that you added th
 </hostdev>
 ```
 
-The important bit is the `<rom bar="on" file="/etc/firmware/EVGA.RTX3070.8192.201019.rom"/>` This will be different depending on your IOMMU grouping, your graphics card and your VBIOS so please keep an eye eye and add the appropriate content. 
+The important bit is the `<rom bar="on" file="/etc/firmware/EVGA.RTX3070.8192.201019.rom"/>` This will be different depending on your IOMMU grouping, your graphics card and your VBIOS so please keep an eye eye and add the appropriate content.
+
+
+<h2 name="part6">
+  IF YOUR GPU DOESN'T STICK WITH `vfio-pci` DRIVERS:
+</h2>
+
+This is a problem that some may experience and I do not have the answer to why it happens but I have a remedy to fix it. Download [this script and run it](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Scripts/popos_helper.sh). This will make whatever the secondary GPU is and bind it with the required `vfio-pci` drivers. Once downloaded and ran, reboot and check if you have your `vfio-pci` drivers by running the `iommu2.sh` file I provided. I found this script through the video: [GPU passthrough guide for PopOS 20.04](https://www.youtube.com/watch?v=HBEqGHCd8hk) by [Pavol Elsig](https://www.youtube.com/channel/UCToFb-mcTsoyyf3muma9r9w). >Pavol, if you are reading this, thank you for the great video. (This worked for me as of my current pop! version. YMMV).
+
+<h2 name="idk">
+  Start the VM
+</h2>
+
+Finish the Windows installation. Use the KVM and connect the second gpu to any monitor to ensure you're getting output. If you are that is good. Otherwise you may have missed a step or did not configure correctly.
+
+Open the Windows Search and type Device Manager. There will be missing drivers. I updated the missing drivers manually. Ignore the `unknown device` missing drivers. That is the QEMU bug.
+
+Select the PCI Device `VEN_1AF4&DEV_1045 (balloon)`, select update driver, browse my computer, select `E:\Balloon\w10\amd64`. Next select the PCI `Simple Communications Controller`, update driver, E:\vioserial\w10. You may also be missing your ethernet connectivity. Go to the ethernet device and update the driver manually by selecting the E: drive, it will automatically find the correct driver. All should be set now. If your gpu is not appearing in the task manager do not freak out yet. We still have some more to do. If you are getting output that is good enough for now.
+
+
+<h2 name="part7">
+  If you would like to backup your xml:
+</h2>
+
+[Check out Aaron's method](https://github.com/aaronanderson/LinuxVMWindowsSteamVR#backup-1), or alternatively, go to your XML through virt-manager and copy / paste it to an xml file though the text editor of your choice.
+
+Ex:
+```
+$ cd Desktop/
+$ vim whateverYouWantToNameIt.xml
+```
+copy paste and then:
+```
+:wq
+```
+to save it.
+
+
+<h2 name="part8">
+  From this point you can play with your new KVM:
+</h2>
+
+Boot into your VM and configure the drivers, make sure everything is working correctly. 
