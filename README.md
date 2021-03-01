@@ -170,8 +170,7 @@ $ sudo apt-get dist-upgrade
 Since this project is a KVM for Windows 10, you are required to download and use virtIO drivers. [virtIO](https://www.linux-kvm.org/page/Virtio) is a virtualization standard for network/disk device drivers. The addition of virtIO can be done by attaching the ISO to the windows VM in the application Virt-Manager (we will get this later). [Get the virtIO drivers here](https://docs.fedoraproject.org/en-US/quick-docs/creating-windows-virtual-machines-using-virtio-drivers/#virtio-win-direct-downloads)
 
 3. (***MANDATORY***) Download Windows 10 ISO files
-Since we are going to be creating a *Windows* kvm, you need the ISO for it. [Get the latest Windows 10 ISO here](https://www.microsoft.com/en-us/software-download/windows10ISO)
-{Maybe explain why?}
+Since we are going to be creating a *Windows* kvm, you need the ISO for it. [Get the latest Windows 10 ISO here](https://www.microsoft.com/en-us/software-download/windows10ISO) Without the ISO you will not be able to boot the VM into Windows.
 
 4. ***OPTIONAL***:
 
