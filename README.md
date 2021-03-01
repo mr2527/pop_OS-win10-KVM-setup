@@ -26,13 +26,13 @@
   PREFACE:
 </h1>
 
-You don't *need* strong terminal skills to do this, but it is highly suggested to know basic commands to get yourself through this, especially if you are not using user-friendly desktop environments or plan to do this entirely through the Terminal. If you don't have good terminal skills I suggest [this](https://ubuntu.com/tutorials/command-line-for-beginners#1-overview) article
+This is a repository that contains a tutorial and the necessary scripts to create a working [Pop!\_OS 20.10 x86_64](https://pop.system76.com/) -> Windows 10 KVM.
 
-I have moderately strong terminal knowledge so this was a breeze for me, but I entirely understand new users who are wanting to get into the KVM environment after switching to Linux for the myriad of reasons that one may have(I don't blame you for moving. [Welcome to Linux!](https://livebook.manning.com/book/linux-in-action/chapter-1/10)).
+You don't *need* strong terminal skills to do this, but it is highly recomended that you know basic terminal commands to get yourself through this. This is especially true if you are not using user-friendly desktop environments or plan to do this entirely through the Terminal. If you don't have good terminal skills I suggest [this](https://ubuntu.com/tutorials/command-line-for-beginners#1-overview) article
 
-If you are a seasoned UNIX/Linux/Related user, this may not be the guide for you as there will be a lot of verbose information here. In that case, I suggest going to the [Arch](https://wiki.archlinux.org/index.php/KVM) KVM wiki or alternatively going to the guides listed [below](https://github.com/mr2527/pop_OS-win10-KVM-setup#--guides).
+I have moderate terminal knowledge, so this was a breeze for me; but I understand new users who want to get into the KVM environment after switching to Linux for the myriad of reasons that they may have(I don't blame you for moving. [Welcome to Linux!](https://livebook.manning.com/book/linux-in-action/chapter-1/10)).
 
-This is a repo that contains a tutorial and the necessary scripts to create a working [Pop!\_OS 20.10 x86_64](https://pop.system76.com/) -> Windows 10 KVM.
+If you are a seasoned UNIX/Linux/Related user, this may not be the guide for you, as this will be a more verbose guide. If you are a more experienced user, I suggest going to the [Arch](https://wiki.archlinux.org/index.php/KVM) KVM wiki or alternatively going to the guides listed [below](https://github.com/mr2527/pop_OS-win10-KVM-setup#--guides).
 
 <p align="center">
   <img width="1000" height="500" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/pop_Neofetch.png">
@@ -54,15 +54,15 @@ This KVM for Windows 10 will allow for PCIE and SATA devices to be passed throug
   Reasoning/Consideration:
 </h3>
 
-My reasoning for creating this was because at the time, I was and still am a newer Linux user that is also a gamer. I did not want to abandon my chances of gaming with my want of moving over to a better development environment. I also did not want to necessarily deal with the annoying dual booting that I have. It's just easier to pull my hair out for a few days and learn to set this up than dual booting.
+My reasoning for creating this was that, at the time, I was a newer Linux user that was also a gamer, and I did not want my moving over to a better development environment to impact my ability to game. I also did not want to necessarily deal with the annoying dual booting that I had. It is just easier to pull my hair out for a few days and learn to set this up than dual booting.
 
-I spent nearly a week sifting through various guides getting this environment to work (properly) on my desktop, and I want to share the tips and tricks I've learned along the way and present a digestible way to getting your KVM / Virt-Manager set up (for windows 10) for inexperienced users. Some guides would get me halfway and then would not provide me with enough information on where to go next. Then I would find a different guide that summed up the first but left delicate details out. All the guides I have read however are great and I want to give recognition to the individuals that helped me get this environment to work.
+I spent nearly a week sifting through various guides getting this environment to work (properly) on my desktop, and I want to share the tips and tricks I've learned along the way and present how to establish a KVM / Virt-Manager set up (for windows 10) for inexperienced users in an easily digestible way. Some guides would get me halfway and then would not provide me with enough information on where to go next, others summed up the first but left delicate details out. All the guides I have read however are great and I want to give recognition to the individuals that helped me get this environment to work.
 
 <h3 name="Guides">
   Guides:
 </h3>
 
-Please consider checking out these guides to find out where I was able to get my information from - I highly suggest it, The information is great.
+Please consider checking out these guides to find out where I was able to get my information from - I highly recommend it, and the information is great.
 
 This guide is designed to pull information from both sub-guides. All other guides will be referenced appropriately.
 
@@ -126,10 +126,10 @@ $ sudo -i
 This will sign you into root.
 
 
-2. Remember tab completion! It will make your life a lot easier when going back and forth between directories.
+2. Remember tab completion! It will make your life a lot easier when going back and forth between directories. Simply type the begining of your command and hit tab, the terminal will auto fill in the rest.
 
 
-3. It's a confusing experience but I am sure you can get through it with some perseverance. Keep at it.
+3. It is a confusing experience but I am sure you can get through it with some perseverance. Keep at it.
 
 
 4. I suggest installing [Tree](https://www.computerhope.com/unix/tree.htm) to see how directories are laid out in the terminal (useful later!):
@@ -147,7 +147,7 @@ It will produce output like this:
   <img width="693" height="697" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/tree_example.png">
 </p>
 
-5. Basic Terminal commands. clear, ls, cd, mkdir, cp, etc.
+5. Basic Terminal commands. clear, ls, cd, mkdir, cp, etc. {I would either define these here, or link to this website: https://www.malikbrowne.com/blog/helpful-terminal-commands}
 
 <h2 name="tutorial">
     Tutorial
@@ -166,11 +166,12 @@ $ sudo apt-get upgrade
 $ sudo apt-get dist-upgrade
 ```
 
-2. Download virtIO ISO files (***MANDATORY***)
+2. (***MANDATORY***) Download virtIO ISO files
 Since this project is a KVM for Windows 10, you are required to download and use virtIO drivers. [virtIO](https://www.linux-kvm.org/page/Virtio) is a virtualization standard for network/disk device drivers. The addition of virtIO can be done by attaching the ISO to the windows VM in the application Virt-Manager (we will get this later). [Get the virtIO drivers here](https://docs.fedoraproject.org/en-US/quick-docs/creating-windows-virtual-machines-using-virtio-drivers/#virtio-win-direct-downloads)
 
-3. Download Windows 10 ISO files (***MANDATORY***)
+3. (***MANDATORY***) Download Windows 10 ISO files
 Since we are going to be creating a *Windows* kvm, you need the ISO for it. [Get the latest Windows 10 ISO here](https://www.microsoft.com/en-us/software-download/windows10ISO)
+{Maybe explain why?}
 
 4. ***OPTIONAL***:
 
@@ -178,7 +179,7 @@ Since we are going to be creating a *Windows* kvm, you need the ISO for it. [Get
   If you own an AMD graphics card as host:
 </h4>
 
-You don't *need* the Vulkan Drivers but if you want the best performance you can get on the host if it uses an AMD GPU I highly suggest this. Ubuntu comes with `mesa-vulkan-drivers` which offer comparable or better performance but you can get the AMD Vulkan drivers here:
+You don't *need* the Vulkan Drivers but if you want the best performance you can get on the host, and if it uses an AMD GPU I highly suggest this. Ubuntu comes with `mesa-vulkan-drivers` which offer comparable or better performance but you can get the AMD Vulkan drivers here:
 ```
 $ sudo wget -qO - http://repo.radeon.com/amdvlk/apt/debian/amdvlk.gpg.key | sudo apt-key add -
 $ sudo sh -c 'echo deb [arch=amd64] http://repo.radeon.com/amdvlk/apt/debian/ bionic main > /etc/apt/sources.list.d/amdvlk.list'
@@ -186,7 +187,7 @@ $ sudo apt update
 $ sudo apt-get install amdvlk
 ```
 
-5. Install the following packages (***MANDATORY***)
+5. (***MANDATORY***) Install the following packages
 ```
 $ sudo apt install libvirt-daemon-system libvirt-clients qemu-kvm qemu-utils virt-manager ovmf
 ```
@@ -244,9 +245,9 @@ Intel:
 GRUB_CMDLINE_LINUX_DEFAULT="quiet splash amd_iommu=on"
 ```
 
-As mentioned in [Bryan's guide](https://github.com/bryansteiner/gpu-passthrough-tutorial/blob/master/README.md), when planning the GPU passthrough setup, it was said to blacklist the NVIDIA/AMD drivers. "The logic stems from the fact that since the native drivers can't attach to the GPU at boot-time, the GPU will be freed-up and available to bind to the vfio drivers instead." The tutorials will make you add a parameter called `pci-stub` with the PCI bus ID of the GPU you wish to use. I did not follow this approach and instead dynamically unbind the drivers and bind `VFIO-PCI` drivers to it. Alternatively, you can run this script to bind the `VFIO-PCI` drivers to the secondary card in your PC. But it is important to understand IOMMU groupings. The script provided by [Bryan here](https://github.com/bryansteiner/gpu-passthrough-tutorial/blob/master/kvm/scripts/iommu.sh) is perfectly adequate for finding IOMMU groups, but I found [this script](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Scripts/iommu2.sh) to be better.
+As mentioned in [Bryan's guide](https://github.com/bryansteiner/gpu-passthrough-tutorial/blob/master/README.md), when planning the GPU passthrough setup, it was said to blacklist the NVIDIA/AMD drivers. {I don't think this has been mentioned yet in your own guide though} "The logic stems from the fact that since the native drivers can't attach to the GPU at boot-time, the GPU will be freed-up and available to bind to the vfio drivers instead." The tutorials will make you add a parameter called `pci-stub` with the PCI bus ID of the GPU you wish to use. I did not follow this approach and instead dynamically unbind the drivers and bind `VFIO-PCI` drivers to it. Alternatively, you can run this script to bind the `VFIO-PCI` drivers to the secondary card in your PC. But it is important to understand IOMMU groupings. The script provided by [Bryan here](https://github.com/bryansteiner/gpu-passthrough-tutorial/blob/master/kvm/scripts/iommu.sh) is perfectly adequate for finding IOMMU groups, but I found [this script](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Scripts/iommu2.sh) to be better.
 
-The reason we want to use either script is to find the devices we want to pass through (storage drivers, PCIe hardware, etc). [IOMMU](https://en.wikipedia.org/wiki/Input%E2%80%93output_memory_management_unit) is a reference to the chipset device that maps virtual addresses to physical addresses on the input/output of the devices. At the end of this step we want to make sure that we have appropriate IOMMU groupings. The reason for this is you cannot separate the groupings.
+The reason we want to use either script is to find the devices we want to pass through (storage drivers, PCIe hardware, etc). [IOMMU](https://en.wikipedia.org/wiki/Input%E2%80%93output_memory_management_unit) is a reference to the chipset device that maps virtual addresses to physical addresses on the input/output of the devices. At the end of this step we want to make sure that we have appropriate IOMMU groupings. The reason for this is that you cannot separate the groupings.
 
 Run the script:
 ```
@@ -257,7 +258,7 @@ If you cannot run the script, with or without sudo, then you should run:
 ```
 chmod +x ./iommu2.sh
 ```
-[chmod](https://en.wikipedia.org/wiki/Chmod) elevates permissions for files and in this case would allow you to run this without complications.
+[chmod](https://en.wikipedia.org/wiki/Chmod) elevates permissions for files, and in this case would allow you to run this without complications.
 
 For AMD systems the output will look something like this:
 
@@ -295,7 +296,7 @@ Since I did not need that part I will be skipping it. The next steps are applica
 <h2 name="VM logistics">
 ***OPTIONAL*** VM Dynamic Binding
 </h2>
-How: Libvirt has a hook [Libvirt hooks](https://libvirt.org/hooks.html) system that grants you access to running commands on startup or shutdown of the VM. The scripts that are located within the directory `/etc/libvirt/hooks`. If the directory cannot be found or does not exist, create it.
+How: Libvirt has a hook [Libvirt hooks](https://libvirt.org/hooks.html) system that grants you access to running commands on startup or shutdown of the VM. The scripts that are located within the directory `/etc/libvirt/hooks`. If the directory cannot be found, or does not exist, create it.
 
 ```
 $ sudo mkdir /etc/libvirt/hooks
@@ -492,7 +493,7 @@ Navigate to `NIC` and change Device model to `virtio`
   <img width="600" height="600" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/virt14.png">
 </p>
 
-Now if you want to pass in and USB Host Devices feel free to add whatever ones you want. I did this and changed it later to pass in the entire PCI device.
+Now if you want to pass in any USB Host Devices feel free to add whatever ones you want. I did this and changed it later to pass in the entire PCI device.
 
 Now we are going to have to get our hands dirty with editing the XML file. Go to `Virtual Machine Manager`, select `edit` -> `preferences` -> `General` -> `Enable XML editing` and now you can navigate to the `$VM_NAME on QEMU/KVM` window and then select `Overview` -> `XML`.
 
@@ -545,7 +546,7 @@ Error 43 should no longer occur.
 
 This section will detail on how to install the Windows 10 VM and get ready to move forward with tweaks and updates to get your performance better. I will be pulling from [Aaron's guide](https://github.com/aaronanderson/LinuxVMWindowsSteamVR#windows-installation---part-1) in this section.
 
-START the VM. Click into the VM window and it should have your mouse and keyboard take over the window. Press enter when you are prompted to boot from the CDROM. There is a chance you weren't fast enough and then you are shown the UEFI shell. If this is the case, type `exit` or go to `boot manager` -> `UEFI QEMU CDROM QM03` (There may be more than 1 zero if yours).
+START the VM. Click into the VM window and it should have your mouse and keyboard take over the window. Press enter when you are prompted to boot from the CDROM. If you are shown the UEFI shell then you weren't fast enough. If this is the case, type `exit` or go to `boot manager` -> `UEFI QEMU CDROM QM03` (There may be more than 1 zero in yours).
 
 Select 'I don't have a product key' I highly suggest *not* putting a windows code in unless you are 100% completed with your installation and are fine with the performance. Reinstallation is not out of the ordinary.
 
@@ -557,7 +558,7 @@ Once this is done and the installation goes on, you can then try to shutdown the
   Adding a VBIOS to Your Guest (Windows 10) VM
 </h2>
 
-Since we completed the Windows install we can do some more setup by sending the proper VBIOS for your guest. You don't have to do this but it's highly suggested to get the best performance. ***IF YOU NEED TO GET YOUR VBIOS*** navigate to -> `https://www.techpowerup.com/vgabios/` and find your model and correct VBIOS. Once you have this you can download it to anywhere you will remember it and then:
+Since we completed the Windows install we can do some more setup by sending the proper VBIOS for your guest. You don't have to do this but it's highly suggested to get the best performance. ***IF YOU NEED TO GET YOUR VBIOS*** navigate to -> `https://www.techpowerup.com/vgabios/` and find your model and correct VBIOS. Once you have this you can download it to a location you will remember, and then:
 
 ```
 $ sudo mkdir /etc/firmware
@@ -593,14 +594,14 @@ Now navigate back to your virt-manager and find the PCI device that you added th
 </hostdev>
 ```
 
-The important bit is the `<rom bar="on" file="/etc/firmware/EVGA.RTX3070.8192.201019.rom"/>` This will be different depending on your IOMMU grouping, your graphics card and your VBIOS so please keep an eye eye and add the appropriate content.
+The important bit is the `<rom bar="on" file="/etc/firmware/EVGA.RTX3070.8192.201019.rom"/>` This will be different depending on your IOMMU grouping, your graphics card and your VBIOS so please keep an eye open and add the appropriate content.
 
 
 <h2 name="part6">
   IF YOUR GPU DOESN'T STICK WITH `vfio-pci` DRIVERS:
 </h2>
 
-This is a problem that some may experience and I do not have the answer to why it happens but I have a remedy to fix it. Download [this script and run it](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Scripts/popos_helper.sh). This will make whatever the secondary GPU is and bind it with the required `vfio-pci` drivers. Once downloaded and run, reboot and check if you have your `vfio-pci` drivers by running the `iommu2.sh` file I provided. I found this script through the video: [GPU passthrough guide for PopOS 20.04](https://www.youtube.com/watch?v=HBEqGHCd8hk) by [Pavol Elsig](https://www.youtube.com/channel/UCToFb-mcTsoyyf3muma9r9w). >Pavol, if you are reading this, thank you for the great video. (This worked for me as of my current pop! version. YMMV).
+This is a problem that some may experience and I do not have the answer as to why it happens, but I have a remedy for it: Download [this script and run it](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Scripts/popos_helper.sh). This will take whatever the secondary GPU is and bind it with the required `vfio-pci` drivers. Once downloaded and run, reboot and check if you have your `vfio-pci` drivers by running the `iommu2.sh` file I provided. I found this script through the video: [GPU passthrough guide for PopOS 20.04](https://www.youtube.com/watch?v=HBEqGHCd8hk) by [Pavol Elsig](https://www.youtube.com/channel/UCToFb-mcTsoyyf3muma9r9w). >Pavol, if you are reading this, thank you for the great video. (This worked for me as of my current pop! version. YMMV).
 
 <h2 name="idk">
   Start the VM
@@ -610,7 +611,7 @@ Finish the Windows installation. Use the KVM and connect the second gpu to any m
 
 Open the Windows Search and type Device Manager. There will be missing drivers. I updated the missing drivers manually. Ignore the `unknown device` missing drivers. That is the QEMU bug.
 
-Select the PCI Device `VEN_1AF4&DEV_1045 (balloon)`, select update driver, browse my computer, select `E:\Balloon\w10\amd64`. Next select the PCI `Simple Communications Controller`, update driver, E:\vioserial\w10. You may also be missing your ethernet connectivity. Go to the ethernet device and update the driver manually by selecting the E: drive, it will automatically find the correct driver. All should be set now. If your gpu is not appearing in the task manager do not freak out yet. We still have some more to do. If you are getting output that is good enough for now.
+Select the PCI Device `VEN_1AF4&DEV_1045 (balloon)`, select update driver, browse to My Computer, select `E:\Balloon\w10\amd64`. Next select the PCI `Simple Communications Controller`, update driver, E:\vioserial\w10. You may also be missing your ethernet connectivity. Go to the ethernet device and update the driver manually by selecting the E: drive, this will automatically find the correct driver. All should be set now. If your gpu is not appearing in the task manager do not freak out yet. We still have some more to do. If you are getting output that is good enough for now.
 
 
 <h2 name="part7">
@@ -773,7 +774,7 @@ The last thing that I did was add all of my PCI devices that controlled my USB I
 - [Windows KVM performance](https://www.userbenchmark.com/UserRun/40099278) - 2/21/21
 - [Windows 10 Native]() - coming soon
 
-I'm hopeful that you will get great performance with your KVMs and hardware. If your CPU is not getting the performance you'd like, look over the tweaks, topology and lastly if you can afford it, overclock your CPU. I have my CPU in a custom watercooling loop so I'm pushing varying voltages and clock speeds.
+I'm hopeful that you will get great performance with your KVMs and hardware. If your CPU is not getting the performance you would like: look over the tweaks, topology and lastly if you can afford it, overclock your CPU. I have my CPU in a custom watercooling loop so I'm pushing varying voltages and clock speeds.
 
 <h1 name="Credits/Resources">
   Credits & Resources:
