@@ -1,7 +1,7 @@
 # pop!_OS-win10-KVM-setup
 
 <h1 name="WIP">
-  THIS IS A WORK IN PROGRESS GUIDE. LAST UPDATE: 02/21/21 11:00 PM EST
+  THIS IS A WORK IN PROGRESS GUIDE. LAST UPDATE: 3/22/21 10:00 PM EST
 </h1>
 
 <h2>
@@ -810,3 +810,14 @@ These are the sources I used to get my KVM running. There are a ton more and I s
 
 
 
+<h1 name="Food For Thought & Things I've Found Out">
+  Food For Thought & Things I've Found Out:
+</h1>
+
+This will be a personal discussion section where I will discuss any personal problems or interesting things that I may encounter with the KVM.
+
+So as of 3/22/21 I may have found a fix with a problem that I've been encountering with entirely random intervals and no way (that I know of) of figuring out why I'm getting hard crashes.
+
+Explanation: I will be using the KVM to play my games and maybe do some coding with C# and microsoft related applications and with entirely random intercals/chances my entire computer will turn off. This includes the host. It will act as a hard reset and take me to my BIOS where the PC reboots as normal with no problems, errors, or messages of any kind. My first thought is that there was or is something wrong with a PCIE devices conflicting with the HOST and GUEST OS. I'm not sure if that is or isn't the problem but I tried removing and adding different devices with no fixes. 
+
+***Possible fix?***: I went back into the XML file for the project and removed pinning from CPU 0. I read on an obscure forum that removing the pinning from 0 fixed the problem. I am not entirely sure if this has fixed my problem but I have yet to encounter a hard crash. I ran a very demanding CPU stress test to see if that could cause a crash but doing so before or after the CPU pinning change did not result in any crashes. I will continue to monior any complications that I get from this point forward.
