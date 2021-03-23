@@ -9,14 +9,31 @@
 </h2>
 
 * [PREFACE](#preface)
-    * [Introduction:](#introduction)
-        * [Reasoning/Consideration:](#reasoning/considerations)
-        * [Guides](#Guides)
-            * [Bryan's Guide](#Bryan's_Guide)
-            * [Aaron's Guide](#Aarons's_Guide)
-        * [Hardware Setup](#Hardware_setup)
-        * [Hardware Requirements](#hardware_requirements)
-        * [Tips/Tricks:](tips/tricks)
+* [Introduction:](#introduction)
+    * [Reasoning/Consideration:](#reasoning/considerations)
+    * [Guides](#Guides)
+        * [Bryan's Guide](#Bryan's_Guide)
+        * [Aaron's Guide](#Aarons's_Guide)
+    * [Hardware Setup](#Hardware_setup)
+    * [Hardware Requirements](#hardware_requirements)
+    * [Tips/Tricks](#tips/tricks)
+* [Tutorial](#tutorial)
+    * [Part 1: Prerequisites](#part1)
+        * [If you own an AMD graphics card as host](#AMD_optional)
+    * [Part 2: ACS Override Patch (Optional)](#part_1.1)
+        * [OPTIONAL VM Dynamic Binding](#VM_Dynamic_Binding)
+    * [Part 3: Creating the VM in Virt-Manager](#Creating_VM)
+    * [Part 4: Installing Windows 10 in Virt-Manager](#Installing_Win10)
+    * [Part 5: Adding a VBIOS to Your Guest (Win 10) VM](#Installing_VBIOS)
+    * [Part 6: IF Drivers Don't Stick to Your GPU (vfio-pci)](#vfio_stick)
+    * [Part 7: START THE VM](#START)
+        * [Part 7.1: Backup Your XML](#backup_xml)
+    * [Part 8: CPU Topology & Pinning](#part8) 
+        * [Part 8.1: Pinning For Multithreaded CPUs](#pinning)
+    * [Part 9: Disk Tuning](#disk_tuning)
+* [Benchmarking](#end)
+* [Credits & Resources](#Credits/Resources)
+* [Food For Thought & Things I've Found Out](#Food)
 
 <h5 name="help">
   Spelling and grammar assistance by my buddy Isaiah, thank you.
@@ -174,7 +191,7 @@ Since we are going to be creating a *Windows* kvm, you need the ISO for it. [Get
 
 4. ***OPTIONAL***:
 
-<h4 name="AMD optional">
+<h4 name="AMD_optional">
   If you own an AMD graphics card as host:
 </h4>
 
@@ -284,15 +301,15 @@ If you have the problem presented in the Intel example, you have 2 options:
 1. You can try swapping which PCI slot the graphics cards are in. This may or may not provide the expected results.
 2. Alternatively you can conduct an [ACS Override Patch](https://queuecumber.gitlab.io/linux-acs-override/). It's *highly* worth it to read this post from [Alex Williamson](https://vfio.blogspot.com/2014/08/iommu-groups-inside-and-out.html). "Applying the ACS Override Patch may compromise system security. Check out this post to see why the ACS patch will probably never make its way upstream to the mainline kernel."
 
-<h4 name="part 1.1">
+<h3 name="part_1.1">
     ACS Override Patch (Optional):
-</h4>
+</h3>
 
 **PLEASE go to [Bryan's guide](https://github.com/bryansteiner/gpu-passthrough-tutorial/blob/master/README.md) and read how to do it there and understand the complications and implications.**
 
 Since I did not need that part I will be skipping it. The next steps are applicable if you need the patch or not. Dynamic binding is not necessarily required. But it works in my case so I suggest looking into it. I will provide instructions below.
 
-<h2 name="VM logistics">
+<h2 name="VM_Dynamic_Binding">
 ***OPTIONAL*** VM Dynamic Binding
 </h2>
 How: Libvirt has a hook [Libvirt hooks](https://libvirt.org/hooks.html) system that grants you access to running commands on startup or shutdown of the VM. The scripts that are located within the directory `/etc/libvirt/hooks`. If the directory cannot be found, or does not exist, create it.
@@ -404,7 +421,7 @@ It should look like the image above once completed. You should be all set in thi
 
 Take a breather! We are almost there!
 
-<h2 name="part3">
+<h2 name="Creating_VM">
   Creating the VM in Virt-Manager
 </h2>
 
@@ -539,7 +556,7 @@ If QEMU 4.0 is being used with a q35 chipset you will need to add this to the en
 
 Error 43 should no longer occur.
 
-<h2 name="part4">
+<h2 name="Installing_Win10">
   Installing Windows 10 in the VM
 </h2>
 
@@ -553,7 +570,7 @@ On the installation screen for windows, select `Custom: Install Windows Only (ad
 
 Once this is done and the installation goes on, you can then try to shutdown the VM before Windows auto-restarts. If you get stuck on a black screen due to an AMD GPU bug then force your VM off and put the host to sleep then wake up the host.
 
-<h2 name="part5">
+<h2 name="Installing_VBIOS">
   Adding a VBIOS to Your Guest (Windows 10) VM
 </h2>
 
@@ -596,13 +613,13 @@ Now navigate back to your virt-manager and find the PCI device that you added th
 The important bit is the `<rom bar="on" file="/etc/firmware/EVGA.RTX3070.8192.201019.rom"/>` This will be different depending on your IOMMU grouping, your graphics card and your VBIOS so please keep an eye open and add the appropriate content.
 
 
-<h2 name="part6">
+<h2 name="vfio_stick">
   IF YOUR GPU DOESN'T STICK WITH `vfio-pci` DRIVERS:
 </h2>
 
 This is a problem that some may experience and I do not have the answer as to why it happens, but I have a remedy for it: Download [this script and run it](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Scripts/popos_helper.sh). This will take whatever the secondary GPU is and bind it with the required `vfio-pci` drivers. Once downloaded and run, reboot and check if you have your `vfio-pci` drivers by running the `iommu2.sh` file I provided. I found this script through the video: [GPU passthrough guide for PopOS 20.04](https://www.youtube.com/watch?v=HBEqGHCd8hk) by [Pavol Elsig](https://www.youtube.com/channel/UCToFb-mcTsoyyf3muma9r9w). >Pavol, if you are reading this, thank you for the great video. (This worked for me as of my current pop! version. YMMV).
 
-<h2 name="idk">
+<h2 name="START">
   Start the VM
 </h2>
 
@@ -613,7 +630,7 @@ Open the Windows Search and type Device Manager. There will be missing drivers. 
 Select the PCI Device `VEN_1AF4&DEV_1045 (balloon)`, select update driver, browse to My Computer, select `E:\Balloon\w10\amd64`. Next select the PCI `Simple Communications Controller`, update driver, E:\vioserial\w10. You may also be missing your ethernet connectivity. Go to the ethernet device and update the driver manually by selecting the E: drive, this will automatically find the correct driver. All should be set now. If your gpu is not appearing in the task manager do not freak out yet. We still have some more to do. If you are getting output that is good enough for now.
 
 
-<h2 name="part7">
+<h2 name="backup_xml">
   If you would like to backup your xml:
 </h2>
 
@@ -659,7 +676,7 @@ Do not apply yet. Go all the way to the bottom of the XML and under the `</devic
 ```
 Now apply. These new insertions should stay. If you did it incorrectly they will disappear after applying. Double check to make sure that it sticks. Proceed with the instructions in the next section.
 
-<h3 name="pinning"
+<h3 name="pinning">
   CPU Pinning (ONLY if you are [multithreaded](https://en.wikipedia.org/wiki/Multithreading_(computer_architecture))):
 </h3>
 
@@ -754,7 +771,7 @@ This is based on the topology of your CPU and will vary. This is how I set it up
 
 As [Bryan](https://github.com/bryansteiner/gpu-passthrough-tutorial#----cpu-pinning) states, "If you're wondering why I tuned my CPU configuration this way, I'll refer you to this section of the Libvirt domain XML format.16 More specifically, consider the cputune element and its underlying vcpupin, emulatorpin, and iothreadpin elements. The Arch Wiki recommends to pin the emulator and iothreads to host cores (if available) rather than the VCPUs assigned to the guest. In the example above, 12 out of my 24 threads are assigned as vCPUs to the guest and from the remaining 12 threads on the host, 4 are assigned to the emulator and 8 are assigned to an iothread see below."
 
-<h3 name="part disk">
+<h3 name="disk_tuning">
   If you need disk tuning:
 </h3>
 
@@ -810,7 +827,7 @@ These are the sources I used to get my KVM running. There are a ton more and I s
 
 
 
-<h1 name="Food For Thought & Things I've Found Out">
+<h1 name="Food">
   Food For Thought & Things I've Found Out:
 </h1>
 
