@@ -4,6 +4,10 @@
   THIS IS A WORK IN PROGRESS GUIDE. LAST UPDATE: 3/22/21 10:00 PM EST
 </h1>
 
+<h1 name="help">
+  Special thanks to Isaiah & Joey for the assistance on the Layout/Grammar/Structure of this project. It is appreciated greatly.
+</h1>
+
 <h2>
     Table of Contents:
 </h2>
@@ -34,10 +38,6 @@
 * [Benchmarking](#end)
 * [Credits & Resources](#Credits/Resources)
 * [Food For Thought & Things I've Found Out](#Food)
-
-<h5 name="help">
-  Spelling and grammar assistance by my buddy Isaiah, thank you.
-</h5>
 
 <h1 name="preface">
   PREFACE:
