@@ -171,7 +171,7 @@ It will produce output like this:
 </h2>
 
 <h3 name="part1">
-    Part 1: Prerequisites
+    Prerequisites
 </h3>
 
 Before anything, **it is required** to install these packages and download these files.
