@@ -45,11 +45,11 @@
 
 This is a repository that contains a tutorial and the necessary scripts to create a working [Pop!\_OS 20.10 x86_64](https://pop.system76.com/) -> Windows 10 KVM.
 
-You don't *need* strong terminal skills to do this, but it is highly recommended that you know basic terminal commands to get yourself through this. This is especially true if you are not using user-friendly desktop environments or plan to do this entirely through the Terminal. If you don't have good terminal skills I suggest [this](https://ubuntu.com/tutorials/command-line-for-beginners#1-overview) article
+You don't *need* strong terminal skills to do this, but it is highly recommended that you know basic terminal commands to get yourself through this. This is especially true if you are not using user-friendly desktop environments or plan to do this entirely through the Terminal. If you don't have good terminal skills I suggest [this](https://ubuntu.com/tutorials/command-line-for-beginners#1-overview) article.
 
 I have moderate terminal knowledge, so this was a breeze for me; but I understand new users who want to get into the KVM environment after switching to Linux for the myriad of reasons that they may have(I don't blame you for moving. [Welcome to Linux!](https://livebook.manning.com/book/linux-in-action/chapter-1/10)).
 
-If you are a seasoned UNIX/Linux/Related user, this may not be the guide for you, as this will be a more verbose guide. If you are a more experienced user, I suggest going to the [Arch KVM wiki](https://wiki.archlinux.org/index.php/KVM) or alternatively going to the guides listed [below](https://github.com/mr2527/pop_OS-win10-KVM-setup#--guides).
+If you are a seasoned UNIX/Linux/related user, this may not be the guide for you, as this will be a more verbose guide. If you are a more experienced user, I suggest going to the [Arch KVM wiki](https://wiki.archlinux.org/index.php/KVM) or alternatively going to the guides listed [below](https://github.com/mr2527/pop_OS-win10-KVM-setup#--guides).
 
 <p align="center">
   <img width="1000" height="500" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/pop_Neofetch.png">
