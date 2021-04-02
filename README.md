@@ -56,7 +56,7 @@ If you are a seasoned UNIX/Linux/related user, this may not be the guide for you
 </p>
 
 ^If you want **this** information, install [neofetch](https://github.com/dylanaraps/neofetch):
-```
+```bash
 $ sudo apt install neofetch
 $ neofetch
 ```
@@ -137,7 +137,7 @@ Below is a breakdown of my exact PC hardware setup. Please be aware that **there
 </h3>
 
 1. If you are tired of having to enter a password for each `sudo` you do, do the following:
-```
+```bash
 $ sudo -i
 ```
 This will sign you into root.
@@ -150,12 +150,12 @@ This will sign you into root.
 
 
 4. I suggest installing [Tree](https://www.computerhope.com/unix/tree.htm) to see how directories are laid out in the terminal (useful later!):
-```
+```bash
 $ sudo apt install Tree
 ```
 
 You can then run it simply by:
-```
+```bash
 $ tree
 ```
 It will produce output like this:
@@ -177,7 +177,7 @@ It will produce output like this:
 Before anything, **it is required** to install these packages and download these files.
 
 1. Update your OS if it is out of date:
-```
+```bash
 $ sudo apt-get update
 $ sudo apt-get upgrade
 $ sudo apt-get dist-upgrade
@@ -196,7 +196,7 @@ Since we are going to be creating a *Windows* kvm, you need the ISO for it. [Get
 </h4>
 
 You don't *need* the Vulkan Drivers but if you want the best performance you can get on the host, and if it uses an AMD GPU I highly suggest this. Ubuntu comes with `mesa-vulkan-drivers` which offer comparable or better performance but you can get the AMD Vulkan drivers here:
-```
+```bash
 $ sudo wget -qO - http://repo.radeon.com/amdvlk/apt/debian/amdvlk.gpg.key | sudo apt-key add -
 $ sudo sh -c 'echo deb [arch=amd64] http://repo.radeon.com/amdvlk/apt/debian/ bionic main > /etc/apt/sources.list.d/amdvlk.list'
 $ sudo apt update
@@ -204,7 +204,7 @@ $ sudo apt-get install amdvlk
 ```
 
 5. (***MANDATORY***) Install the following packages
-```
+```bash
 $ sudo apt install libvirt-daemon-system libvirt-clients qemu-kvm qemu-utils virt-manager ovmf
 ```
 After this is completed, you are going to restart your PC and enter your BIOS. BIOS entry varies by manufacturer. In my case I can access it with F2, F8, or DEL. Enable the feature called `IOMMU`. Once this is completed you will then need to enable CPU virtualization. For Intel processors, you will need to enable `VT-d`. For AMD, look for something called `AMD-Vi` or in the case of my motherboard `SVM`/`SVM MODE` and enable it. Save your changes to the BIOS and then go back into pop!
@@ -212,22 +212,22 @@ After this is completed, you are going to restart your PC and enter your BIOS. B
 Once you are logged back in you are going to want to run **this** command:
 
 AMD:
-```
+```bash
 $ dmesg | grep AMD-Vi
 ```
 
 Intel:
-```
+```bash
 $ dmesg | grep VT-d
 ```
 
 If you get this error:
-```
+```bash
 dmesg: read kernel buffer failed: Operation not permitted
 ```
 
 Run it as sudo.
-```
+```bash
 $ sudo dmesg | grep AMD-Vi
 ```
 
@@ -240,24 +240,24 @@ If you get output that looks like **this**, you should be ready.
 Once this is completed you will need to pass this hardware enabled IOMMU functionality into the kernel. You can read more about [kernel parameters here](https://wiki.archlinux.org/index.php/kernel_parameters). Depending on your boot-loader you will have to figure out how to do this yourself. For me, I can use [kernelstub](https://github.com/pop-os/kernelstub). Other people use grub, GRUB2 or rEFInd.
 
 AMD:
-```
+```bash
 $ sudo kernelstub --add-options "amd_iommu=on"
 ```
 
 Intel:
-```
+```bash
 $ sudo kernelstub --add-options "intel_iommu=on"
 ```
 
 If you use [GRUB2](https://help.ubuntu.com/community/Grub2), you can do it by going into /etc/default/grub with sudo permissions and include it into the kernel parameter below.
 
 AMD:
-```
+```bash
 GRUB_CMDLINE_LINUX_DEFAULT="quiet splash intel_iommu=on"
 ```
 
 Intel:
-```
+```bash
 GRUB_CMDLINE_LINUX_DEFAULT="quiet splash amd_iommu=on"
 ```
 
@@ -266,12 +266,12 @@ As mentioned in [Bryan's guide](https://github.com/bryansteiner/gpu-passthrough-
 The reason we want to use either script is to find the devices we want to pass through (storage drivers, PCIe hardware, etc). [IOMMU](https://en.wikipedia.org/wiki/Input%E2%80%93output_memory_management_unit) is a reference to the chipset device that maps virtual addresses to physical addresses on the input/output of the devices. At the end of this step we want to make sure that we have appropriate IOMMU groupings. The reason for this is that you cannot separate the groupings.
 
 Run the script:
-```
+```bash
 ./iommu2.sh
 ```
 
 If you cannot run the script, with or without sudo, then you should run:
-```
+```bash
 chmod +x ./iommu2.sh
 ```
 [chmod](https://en.wikipedia.org/wiki/Chmod) elevates permissions for files, and in this case would allow you to run this without complications.
@@ -284,7 +284,7 @@ For AMD systems the output will look something like this:
 
 Pulled from [Bryan's guide](https://github.com/bryansteiner/gpu-passthrough-tutorial/blob/master/README.md), Intel output should look like.
 
-```
+```bash
 ...
 IOMMU Group 1 00:01.0 PCI bridge [0604]: Intel Corporation Xeon E3-1200 v5/E3-1500 v5/6th Gen Core Processor PCIe Controller (x16) [8086:1901] (rev 07)
 IOMMU Group 1 00:01.1 PCI bridge [0604]: Intel Corporation Xeon E3-1200 v5/E3-1500 v5/6th Gen Core Processor PCIe Controller (x8) [8086:1905] (rev 07)
@@ -314,25 +314,25 @@ Since I did not need that part I will be skipping it. The next steps are applica
 </h2>
 How: Libvirt has a hook [Libvirt hooks](https://libvirt.org/hooks.html) system that grants you access to running commands on startup or shutdown of the VM. The scripts that are located within the directory `/etc/libvirt/hooks`. If the directory cannot be found, or does not exist, create it.
 
-```
+```bash
 $ sudo mkdir /etc/libvirt/hooks
 ```
 
 But lucky for us we have the [hook helper](https://passthroughpo.st/simple-per-vm-libvirt-hooks-with-the-vfio-tools-hook-helper/) which can be ran as followed:
-```
+```bash
 $ sudo wget 'https://raw.githubusercontent.com/PassthroughPOST/VFIO-Tools/master/libvirt_hooks/qemu' \-O /etc/libvirt/hooks/qemu
 $ sudo chmod +x /etc/libvirt/hooks/qemu
 ```
 
 Now restart the libvirt to use the hook helper:
-```
+```bash
 $ sudo service libvirtd restart
 ```
 
 If you want to dynamically bind the VFIO-PCI drivers before the VM starts and unbind after you end it, you can do as follows:
 
 Recognize the most important hooks
-```
+```bash
 # Before a VM is started, before resources are allocated:
 /etc/libvirt/hooks/qemu.d/$vmname/prepare/begin
 
@@ -356,18 +356,18 @@ I have named my VM "pop" for this example. My directory structure is:
 </p>
 
 Now is when things get fun. Create a file named `kvm.conf`. My editor of choice is [vim](https://www.vim.org/). If you want to avoid problems when creating these files:
-```
+```bash
 $ sudo $editor_you_want_to_use kvm.conf
 ```
 
 Once you have the file open add these entries:
-```
+```bash
 ## Virsh devices
 VIRSH_GPU_VIDEO=pci_0000_0b_00_0
 VIRSH_GPU_AUDIO=pci_0000_0b_00_1
 ```
 These are how my groupings are made so you are **required* to find your correct groupings and place them here. If you forget where to get them, use the iommu2.sh script by:
-```
+```bash
 $ ./iommu2.sh
 ```
 
@@ -376,7 +376,7 @@ The output of the script will translate the address for each device. Ex: `IOMMU 
 Once you got the current bus addresses you can then move on to create some scripts:
 
 `bind_vfio.sh`:
-```
+```bash
 #!/bin/bash
 
 ## Load the config file
@@ -393,7 +393,7 @@ virsh nodedev-detach $VIRSH_GPU_AUDIO
 ```
 
 `unbind_vfio.sh`:
-```
+```bash
 #!/bin/bash
 
 ## Load the config file
@@ -412,7 +412,7 @@ modprobe -r vfio
 My script varies from [Bryan's](https://github.com/bryansteiner/gpu-passthrough-tutorial#----part-2-vm-logistics) by removing groupings I do not have. It works for me. You may need to tweak it some.
 
 Once the scripts are created, chmod them:
-```
+```bash
 $ chmod +x bind_vfio.sh unbind_vfio.sh
 ```
 If this doesn't work, just add sudo to the front.
@@ -518,7 +518,7 @@ Now we are going to have to get our hands dirty with editing the XML file. Go to
 </p>
 
 If you are passing in an NVIDIA GPU to the VM you may run into [Error 43](https://passthroughpo.st/apply-error-43-workaround/). This is because NVIDIA doesn't enable virtualization on their GeForce cards. The workaround is to have hypervisor hide its existence. From here navigate to the `<hyperv>` section and add this.
-```
+```bash
 <hyperv>
 <features>
     ...
@@ -533,7 +533,7 @@ If you are passing in an NVIDIA GPU to the VM you may run into [Error 43](https:
 ```
 
 Next directly under the `</hyperv>` line add
-```
+```bash
 <features>
     ...
     <hyperv>
@@ -547,7 +547,7 @@ Next directly under the `</hyperv>` line add
 ```
 
 If QEMU 4.0 is being used with a q35 chipset you will need to add this to the end of `<features>`.
-```
+```bash
 <features>
     ...
     <ioapic driver="kvm"/>
@@ -576,7 +576,7 @@ Once this is done and the installation goes on, you can then try to shutdown the
 
 Since we completed the Windows install we can do some more setup by sending the proper VBIOS for your guest. You don't have to do this but it's highly suggested to get the best performance. ***IF YOU NEED TO GET YOUR VBIOS*** navigate to -> `https://www.techpowerup.com/vgabios/` and find your model and correct VBIOS. Once you have this you can download it to a location you will remember, and then:
 
-```
+```bash
 $ sudo mkdir /etc/firmware
 $ sudo cp EVGA.RTX3070.8192.201019.rom /etc/firmware/
 $ sudo chown root:root /etc/firmware/EVGA.RTX3070.8192.201019.rom
@@ -584,23 +584,23 @@ $ sudo chmod 744 /etc/firmware/EVGA.RTX3070.8192.201019.rom
 ```
 
 I use vim so:
-```
+```bash
 $ sudo vi /etc/apparmor.d/abstractions/libvirt-qemu
 ```
 
 append this to the very end and the SPACES ARE IMPORTANT!!!
-```
+```bash
   /etc/firmware/* r,
 ```
 Once written and you're ready to quit (on vim) shift + : then type `:wq!`, this will write and quit. If you write `:Wq!` it will not work.
 
 run:
-```
+```bash
 $ sudo systemctl restart apparmor.service
 ```
 
 Now navigate back to your virt-manager and find the PCI device that you added that your GPU is under. Click xml and edit the xml to include this:
-```
+```bash
 <hostdev mode="subsystem" type="pci" managed="yes">
   <source>
     <address domain="0x0000" bus="0x0b" slot="0x00" function="0x0"/>
@@ -637,12 +637,12 @@ Select the PCI Device `VEN_1AF4&DEV_1045 (balloon)`, select update driver, brows
 [Check out Aaron's method](https://github.com/aaronanderson/LinuxVMWindowsSteamVR#backup-1), or alternatively, go to your XML through virt-manager and copy / paste it to an xml file though the text editor of your choice.
 
 Ex:
-```
+```bash
 $ cd Desktop/
 $ vim whateverYouWantToNameIt.xml
 ```
 copy paste and then:
-```
+```bash
 :wq
 ```
 to save it.
@@ -661,11 +661,11 @@ Now we can begin editing the XML for some changes that will boost performance!
 Navigate to `Overview` -> `XML` we got some dirty work to do.
 
 Change the very first line to be:
-```
+```bash
 <domain xmlns:qemu="http://libvirt.org/schemas/domain/qemu/1.0" type="kvm">
 ```
 Do not apply yet. Go all the way to the bottom of the XML and under the `</devices>` section add:
-```
+```bash
 ...
   </devices>
   <qemu:commandline>
@@ -682,11 +682,11 @@ Now apply. These new insertions should stay. If you did it incorrectly they will
 
 Now we have to learn how to do some CPU pinning ONLY if you have a multithreaded capable CPU.
 VMs are incapable of distinguishing between physical and logical cores (threads). Virt-manager can see that 24 vCPUs exist and are available but the host has two cores mapped to a single physical core on the physical CPU die. If you want a terminal view of the cores run the command:
-```
+```bash
 $ lscpu -e
 ```
 This will provide output that looks like this (for me):
-```
+```bash
 CPU NODE SOCKET CORE L1d:L1i:L2:L3 ONLINE    MAXMHZ    MINMHZ
   0    0      0    0 0:0:0:0          yes 3800.0000 2200.0000
   1    0      0    1 1:1:1:0          yes 3800.0000 2200.0000
@@ -718,11 +718,11 @@ CPU NODE SOCKET CORE L1d:L1i:L2:L3 ONLINE    MAXMHZ    MINMHZ
 As [Bryan](https://github.com/bryansteiner/gpu-passthrough-tutorial#----cpu-pinning) puts it, "A matching core id (I.e. "CORE" Column) means that the associated threads (i.e. "CPU" column) run on the same physical core.
 
 If reading this information is a little scary from the terminal and you would like a GUI representation, please feel free to install `hwloc`:
-```
+```bash
 $ sudo apt install hwloc
 ```
 and then run it with:
-```
+```bash
 $ lstopo
 ```
 and you will get something that looks like:
@@ -732,7 +732,7 @@ and you will get something that looks like:
 </p>
 
 We will now return to editing the XML configuration for the VM. Under the `<currentMemory>` section add the following:
-```
+```bash
 ...
 <currentMemory unit="KiB">16777216</currentMemory>
 <vcpu placement="static">12</vcpu>
@@ -757,7 +757,7 @@ We will now return to editing the XML configuration for the VM. Under the `<curr
 ***REMEMBER THAT YOUR PINNING IS NOT GUARANTEED TO BE ANYTHING LIKE MINE!*** Please figure out your own pinning and apply the changes.
 
 Now we will go down to the end of `</features>` and edit `<cpu>` by adding the following:
-```
+```bash
 ...
   </features>
   <cpu mode="host-passthrough" check="none" migratable="on">
