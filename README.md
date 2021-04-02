@@ -38,6 +38,9 @@
 * [Benchmarking](#end)
 * [Credits & Resources](#Credits/Resources)
 * [Food For Thought & Things I've Found Out](#Food)
+    * [Experiencing Crashed?](#fix)
+    * [Audio Issues? Here's a Bandaid Fix](#FIX1)
+    * [Audio Issues Still? Here's a Permanent Fix](#FIX2)
 
 <h1 name="preface">
   PREFACE:
