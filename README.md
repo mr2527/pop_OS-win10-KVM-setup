@@ -45,7 +45,7 @@
 
 This is a repository that contains a tutorial and the necessary scripts to create a working [Pop!\_OS 20.10 x86_64](https://pop.system76.com/) -> Windows 10 KVM.
 
-You don't *need* strong terminal skills to do this, but it is highly recomended that you know basic terminal commands to get yourself through this. This is especially true if you are not using user-friendly desktop environments or plan to do this entirely through the Terminal. If you don't have good terminal skills I suggest [this](https://ubuntu.com/tutorials/command-line-for-beginners#1-overview) article
+You don't *need* strong terminal skills to do this, but it is highly recommended that you know basic terminal commands to get yourself through this. This is especially true if you are not using user-friendly desktop environments or plan to do this entirely through the Terminal. If you don't have good terminal skills I suggest [this](https://ubuntu.com/tutorials/command-line-for-beginners#1-overview) article
 
 I have moderate terminal knowledge, so this was a breeze for me; but I understand new users who want to get into the KVM environment after switching to Linux for the myriad of reasons that they may have(I don't blame you for moving. [Welcome to Linux!](https://livebook.manning.com/book/linux-in-action/chapter-1/10)).
 
@@ -143,7 +143,7 @@ $ sudo -i
 This will sign you into root.
 
 
-2. Remember tab completion! It will make your life a lot easier when going back and forth between directories. Simply type the begining of your command and hit tab, the terminal will auto fill in the rest.
+2. Remember tab completion! It will make your life a lot easier when going back and forth between directories. Simply type the beginning of your command and hit tab, the terminal will auto fill in the rest.
 
 
 3. It is a confusing experience but I am sure you can get through it with some perseverance. Keep at it.
@@ -769,7 +769,7 @@ Now we will go down to the end of `</features>` and edit `<cpu>` by adding the f
 ```
 This is based on the topology of your CPU and will vary. This is how I set it up for my AMD Ryzen 9 3900x as it will allocate 1 socket with 6 physical cores and 2 threads per core.
 
-As [Bryan](https://github.com/bryansteiner/gpu-passthrough-tutorial#----cpu-pinning) states, "If you're wondering why I tuned my CPU configuration this way, I'll refer you to this section of the Libvirt domain XML format.16 More specifically, consider the cputune element and its underlying vcpupin, emulatorpin, and iothreadpin elements. The Arch Wiki recommends to pin the emulator and iothreads to host cores (if available) rather than the VCPUs assigned to the guest. In the example above, 12 out of my 24 threads are assigned as vCPUs to the guest and from the remaining 12 threads on the host, 4 are assigned to the emulator and 8 are assigned to an iothread see below."
+As [Bryan](https://github.com/bryansteiner/gpu-passthrough-tutorial#----cpu-pinning) states, "If you're wondering why I tuned my CPU configuration this way, I'll refer you to this section of the Libvirt domain XML format.16 More specifically, consider the cputune element and its underlying vcpupin, emulatorpin, and iothreadpin elements. The Arch Wiki recommends pinning the emulator and iothreads to host cores (if available) rather than the VCPUs assigned to the guest. In the example above, 12 out of my 24 threads are assigned as vCPUs to the guest and from the remaining 12 threads on the host, 4 are assigned to the emulator and 8 are assigned to an iothread see below."
 
 <h3 name="disk_tuning">
   If you need disk tuning:
@@ -864,3 +864,5 @@ This got my brain jogging. I had searched for hours/days about potential fixes t
 4. Suggestion - In the case of a BIOS reset being required, if your motherboard supports it, I would create a profile that can be saved to the BIOS that will save all of your configurations that will keep all of your options for overclocking and general settings.
 
 This has fixed all of my problems up to this point and has removed the stress off of wondering if I can even play games with my friends or alone. 
+
+
