@@ -856,7 +856,7 @@ This got my brain jogging. I had searched for hours/days about potential fixes t
   The Fix:
  </h2>
  
- So here are the steps that I took to ensure that my KVM went back to its perfect working state:
+So here are the steps that I took to ensure that my KVM went back to its perfect working state:
  
 1. Backup your data just in case. You never know... I suggest [Timeshift](https://github.com/teejee2008/timeshift).
 2. Flash your BIOS to the newest stable version, if you are on the newest stable version and are experiencing this WITH the changes below, consider a beta branch or a downgrade. NOTE: Each BIOS is different. Your installation process may vary so PLEASE read your manual or go to your appropriate driver page to get the appropriate files and instructions. If you have an EZ flash functionality you can use that as well and you will be fine. 
@@ -866,3 +866,23 @@ This got my brain jogging. I had searched for hours/days about potential fixes t
 This has fixed all of my problems up to this point and has removed the stress off of wondering if I can even play games with my friends or alone. 
 
 
+<h2 name="AUDIO">
+  Having Audio complications?
+ </h2>
+ 
+Problem: I do not have a PCIE based audio controller. Instead, I own a DAC and Amplifier for powering my collection of headphones. The problem that comes from this is that I either have to pass in the entire USB controller which causes mild conflicts OR pass the individual USB in which has the possibility of producing the exact problem I had.
+ 
+If you pass a USB audio device regardless of the sound quality disregarding the hz or bits you will get crunchy, distorted, demonic, decepticon level of audio. This is unbearable and destroys the quality of any media that is trying to be digested. I will detail below the fixes. 
+ 
+ <h3 name="FIX1">
+  EASY FIX (Bandaid?)
+ </h3>
+ 
+I spent equally as long trying to fix the crashing problem as I was trying to fix my distorted, demonic sounding audio. I'm going to cut to the chase with TWO fixes for you. Once of the simplest fixes is to pass in the entire USB controller device but this causes problems if you want to be able to use your Linux host AND your Windows guest at the same time. Otherwise you can do the next fix which I think is the coolest.
+
+ <h3 name="FIX2">
+  Better Fix For Me:
+ </h3>
+ 
+The best fix that I encountered for getting the best audio out of the VM is using [SCREAM](https://github.com/duncanthrax/scream). SCREAM is "a virtual device driver for Windows that provides a discrete sound device. Audio played through this device is published on your local network as a PCM multicast stream." So essentially you're broadcasting your audio over the network and connecting to it through your HOST machine via the terminal or script. The install is simple enough and running it is even easier. Just follow the directions presented in the git repo provided in the hyperlink above!
+ 
