@@ -835,15 +835,15 @@ This will be a personal discussion section where I will discuss any personal pro
 
 ~~So as of 3/22/21 I may have found a fix with a problem that I've been encountering with entirely random intervals and no way (that I know of) of figuring out why I'm getting hard crashes.~~
 
-UPDATE: 4/1/2021 (NOT a cruel april fools joke) I have found a fix for my specific problem. READ BELOW PLEASE!
+UPDATE: 4/1/2021 (NOT a cruel April fools joke) I have found a fix for my specific problem. READ BELOW PLEASE!
 
-Explanation: I will be using the KVM to play my games and maybe do some coding with C# and microsoft related applications and with entirely random intervals/chances my entire computer will turn off. This includes the host. It will act as a hard reset and take me to my BIOS where the PC reboots as normal with no problems, errors, or messages of any kind. My first thought is that there was or is something wrong with a PCIE devices conflicting with the HOST and GUEST OS. I'm not sure if that is or isn't the problem but I tried removing and adding different devices with no fixes. 
+Explanation: I will be using the KVM to play my games and maybe do some coding with C# and microsoft related applications and with entirely random intervals/chances my entire computer will turn off. This includes the host. It will act as a hard reset and take me to my BIOS where the PC reboots as normal with no problems, errors, or messages of any kind. My first thought is that there was or is something wrong with a PCIE device conflicting with the HOST and GUEST OS. I'm not sure if that is or isn't the problem but I tried removing and adding different devices with no fixes. 
 
-~~***Possible fix?***: I went back into the XML file for the project and removed pinning from CPU 0. I read on an obscure forum that removing the pinning from 0 fixed the problem. I am not entirely sure if this has fixed my problem but I have yet to encounter a hard crash. I ran a very demanding CPU stress test to see if that could cause a crash but doing so before or after the CPU pinning change did not result in any crashes. I will continue to monior any complications that I get from this point forward.~~
+~~***Possible fix?***: I went back into the XML file for the project and removed pinning from CPU 0. I read on an obscure forum that removing the pinning from 0 fixed the problem. I am not entirely sure if this has fixed my problem but I have yet to encounter a hard crash. I ran a very demanding CPU stress test to see if that could cause a crash but doing so before or after the CPU pinning change did not result in any crashes. I will continue to monitor any complications that I get from this point forward.~~
 
 Keeping this here for history sake.
 
-I found the *actual* answer to the variable crashing rates. So the problem is bust summarized in this post on reddit from [u/yona_docova](https://www.reddit.com/r/Amd/comments/kw1o9f/psa_having_random_black_screen_crashes_under/). The biggest "wow this is exactly the problem I'm having" moment was this mention.
+I found the *actual* answer to the variable crashing rates. So the problem is best summarized in this post on reddit from [u/yona_docova](https://www.reddit.com/r/Amd/comments/kw1o9f/psa_having_random_black_screen_crashes_under/). The biggest "wow this is exactly the problem I'm having" moment was this mention.
 
 "You play a game and randomly you will get a black screen crash for no apparent reason, and the PC restarts and you get back into the game, only not to have none, or another crash in 5 minutes or 4 hours later into the game.
 
@@ -856,7 +856,7 @@ This got my brain jogging. I had searched for hours/days about potential fixes t
   The Fix:
  </h2>
  
- So here are the steps that I took to ensure that my KVM went backto its perfect working state:
+ So here are the steps that I took to ensure that my KVM went back to its perfect working state:
  
 1. Backup your data just in case. You never know... I suggest [Timeshift](https://github.com/teejee2008/timeshift).
 2. Flash your BIOS to the newest stable version, if you are on the newest stable version and are experiencing this WITH the changes below, consider a beta branch or a downgrade. NOTE: Each BIOS is different. Your installation process may vary so PLEASE read your manual or go to your appropriate driver page to get the appropriate files and instructions. If you have an EZ flash functionality you can use that as well and you will be fine. 
