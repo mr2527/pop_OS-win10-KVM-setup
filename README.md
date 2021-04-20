@@ -1,7 +1,7 @@
 # pop!_OS-win10-KVM-setup
 
 <h1 name="WIP">
-  THIS IS A WORK IN PROGRESS GUIDE. LAST UPDATE: 4/1/21 10:00 PM EST - Fixes section updated
+  THIS IS A WORK IN PROGRESS GUIDE. LAST UPDATE: 4/19/21 8:13 PM EST - Fixes section updated
 </h1>
 
 <h1 name="help">
@@ -41,6 +41,7 @@
     * [Experiencing Crashes?](#fix)
     * [Audio Issues? Here's a Bandaid Fix](#FIX1)
     * [Audio Issues, Still? Here's a Permanent Fix](#FIX2)
+    * [HDD or SSD Passthrough Disconnecting? - Potential Fix](#FIX3)
 
 <h1 name="preface">
   PREFACE:
@@ -888,4 +889,18 @@ I spent equally as long trying to fix the crashing problem as I was trying to fi
  </h3>
  
 The best fix that I encountered for getting the best audio out of the VM is using [SCREAM](https://github.com/duncanthrax/scream). SCREAM is "a virtual device driver for Windows that provides a discrete sound device. Audio played through this device is published on your local network as a PCM multicast stream." So essentially you're broadcasting your audio over the network and connecting to it through your HOST machine via the terminal or script. The install is simple enough and running it is even easier. Just follow the directions presented in the git repo provided in the hyperlink above!
+
+ <h3 name="FIX3">
+  SSD/HDD passthrough Disconnecting
+ </h3>
+ 
+ So, one of the first real problems I have experienced other than the random crashing that I solved above is my PCI passthrough of an SSD or HDD disconnecting. I will start by saying the immediate fix that solved all my problems was upgrading my BIOS to the newest version. **NOTE: This only occurred in the first place because I updated to the (at the time) more recent BIOS version which introduced the problem. But the version newer than that one fixed my problem.**
+ 
+ If you are still having this problem some potential fixes are as follows:
+ 
+ 1. Downgrade your BIOS
+ 2. Turn off USB/PCI sleep in windows power managerment under advanced settings
+ 3. Turn off Power Saving modes in power management settings
+
+**NOTE: I did find that turning off the USB power management settings actually helped me USB device passthroughs from turning off and disconnecting from the VM. Worked great and I have not had a single problem since.**
  
