@@ -3,7 +3,7 @@
 
 THIS IS NOW A **COMPLETED** GUIDE. I will be providing periodic changes, updates and fixes to this repo as I see fit. 
 
-***I would like to provide thanks to Isaiah and Joey for taking the time out of their day to gloss over this document and aid me in the creation of this repo.***  
+***I would like to provide thanks to Noah, Isaiah and Joey for taking the time out of their day to gloss over this document and aid me in the creation of this repo.***  
 
 LAST UPDATE: 4/23/21 9:00 PM EST - added XML file
 
