@@ -898,6 +898,10 @@ I spent equally as long trying to fix the crashing problem as I was trying to fi
  
 The best fix that I encountered for getting the best audio out of the VM is using [SCREAM](https://github.com/duncanthrax/scream). SCREAM is "a virtual device driver for Windows that provides a discrete sound device. Audio played through this device is published on your local network as a PCM multicast stream." So essentially you're broadcasting your audio over the network and connecting to it through your HOST machine via the terminal or script. The install is simple enough and running it is even easier. Just follow the directions presented in the git repo provided in the hyperlink above!
 
+***NOTE:*** If you are going to use the SCREAM method and you are deadset on getting the absolute fastest speed of audio without any type of delay at all for any professional level of gameplay then this is not the fix for you. You may be better off passing the entire controller. Since SCREAM uses your network to broadcast audio, you WILL have a slight delay. Think of bluetooth. It's a very small amount of delay. I can play high octane games just fine with barely any noticeable impact on gameplay. listening to audio or watching videos is not impacted in the slightest. I have noticed however during playing Rhythm games I just don't hit the notes perfectly as I usually do. That is an easy for for some games by creating a slight offset of a few milliseconds. 
+
+TL:DR if you do not want a delay. Do not use SCREAM. Find an alternative or pass the entire controller for audio which as the drawback of locking you out of your Linux host unless you have a proper work around
+
  <h3 name="FIX3">
   SSD/HDD passthrough Disconnecting
  </h3>
