@@ -3,7 +3,7 @@
 
 THIS IS NOW A **COMPLETED** GUIDE. I will be providing periodic changes, updates and fixes to this repo as I see fit. 
 
-***I would like to provide thanks to Isaiah and Joey for taking the time out of their day to gloss over this document and aid me in the creating of this repo.***  
+***I would like to provide thanks to Isaiah and Joey for taking the time out of their day to gloss over this document and aid me in the creation of this repo.***  
 
 LAST UPDATE: 4/23/21 9:00 PM EST - added XML file
 
@@ -882,13 +882,13 @@ This has fixed all of my problems up to this point and has removed the stress of
  
 Problem: I do not have a PCIE based audio controller. Instead, I own a DAC and Amplifier for powering my collection of headphones. The problem that comes from this is that I either have to pass in the entire USB controller which causes mild conflicts OR pass the individual USB in which has the possibility of producing the exact problem I had.
  
-If you pass a USB audio device regardless of the sound quality disregarding the hz or bits you will get crunchy, distorted, demonic, decepticon level of audio. This is unbearable and destroys the quality of any media that is trying to be digested. I will detail below the fixes. 
+If you pass a USB audio device regardless of the sound quality disregarding the hz or bitrate you will get a crunchy, distorted, demonic, decepticon level of audio. This is unbearable and destroys the quality of any media that is trying to be digested. I will detail below the fixes. 
  
  <h3 name="FIX1">
   EASY FIX (Bandaid?)
  </h3>
  
-I spent equally as long trying to fix the crashing problem as I was trying to fix my distorted, demonic sounding audio. I'm going to cut to the chase with TWO fixes for you. Once of the simplest fixes is to pass in the entire USB controller device but this causes problems if you want to be able to use your Linux host AND your Windows guest at the same time. Otherwise you can do the next fix which I think is the coolest.
+I spent equally as long trying to fix the crashing problem as I was trying to fix my distorted, demonic sounding audio. I'm going to cut to the chase with TWO fixes for you. One of the simplest fixes is to pass in the entire USB controller device but this causes problems if you want to be able to use your Linux host AND your Windows guest at the same time. Otherwise you can do the next fix which I think is the coolest.
 
  <h3 name="FIX2">
   Better Fix For Me:
@@ -905,8 +905,11 @@ The best fix that I encountered for getting the best audio out of the VM is usin
  If you are still having this problem some potential fixes are as follows:
  
  1. Downgrade your BIOS
- 2. Turn off USB/PCI sleep in windows power managerment under advanced settings
+ 2. Turn off USB/PCI sleep in windows power management under advanced settings
  3. Turn off Power Saving modes in power management settings
 
-**NOTE: I did find that turning off the USB power management settings actually helped me USB device passthroughs from turning off and disconnecting from the VM. Worked great and I have not had a single problem since.**
+**NOTE: I did find that turning off the USB power management settings actually helped my USB device pass through from turning off and disconnecting from the VM. Worked great and I have not had a single problem since.**
  
+
+
+
