@@ -904,7 +904,7 @@ The best fix that I encountered for getting the best audio out of the VM is usin
  2. Turn off USB/PCI sleep in windows power management under advanced settings
  3. Turn off Power Saving modes in power management settings
 
-**NOTE: I did find that turning off the USB power management settings actually helped me USB device pass throughs from turning off and disconnecting from the VM. Worked great and I have not had a single problem since.**
+**NOTE: I did find that turning off the USB power management settings actually helped my USB device pass throughs from turning off and disconnecting from the VM. Worked great and I have not had a single problem since.**
  
 
 
