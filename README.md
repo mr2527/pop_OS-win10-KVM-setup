@@ -7,11 +7,6 @@ THIS IS NOW A **COMPLETED** GUIDE. I will be providing periodic changes, updates
 
 LAST UPDATE: 4/23/21 9:00 PM EST - added XML file
 
-
-<h1 name="help">
-  Special thanks to Isaiah & Joey for the assistance on the Layout/Grammar/Structure of this project. It is appreciated greatly.
-</h1>
-
 <h2>
     Table of Contents:
 </h2>
