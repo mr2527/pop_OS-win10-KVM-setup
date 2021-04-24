@@ -1,7 +1,7 @@
 # pop!_OS-win10-KVM-setup
 
 <h1 name="WIP">
-  THIS IS A WORK IN PROGRESS GUIDE. LAST UPDATE: 4/19/21 8:13 PM EST - Fixes section updated
+  THIS IS A WORK IN PROGRESS GUIDE. LAST UPDATE: 4/23/21 9:00 PM EST - added XML file
 </h1>
 
 <h1 name="help">
