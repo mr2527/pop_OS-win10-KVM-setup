@@ -315,9 +315,10 @@ If you have the problem presented in the Intel example, you have 2 options:
 Since I did not need that part I will be skipping it. The next steps are applicable if you need the patch or not. Dynamic binding is not necessarily required. But it works in my case so I suggest looking into it. I will provide instructions below.
 
 <h2 name="VM_Dynamic_Binding">
-***OPTIONAL*** VM Dynamic Binding
+OPTIONAL: VM Dynamic Binding
 </h2>
-How: Libvirt has a hook [Libvirt hooks](https://libvirt.org/hooks.html) system that grants you access to running commands on startup or shutdown of the VM. The scripts that are located within the directory `/etc/libvirt/hooks`. If the directory cannot be found, or does not exist, create it.
+
+How: Libvirt has a hook ([Libvirt Hooks](https://libvirt.org/hooks.html)) system that grants you access to running commands on startup or shutdown of the VM. The scripts that are located within the directory `/etc/libvirt/hooks`. If the directory cannot be found, or does not exist, create it.
 
 ```bash
 $ sudo mkdir /etc/libvirt/hooks
