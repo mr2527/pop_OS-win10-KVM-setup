@@ -656,7 +656,9 @@ to save it.
   From this point you can play with your new KVM:
 </h2>
 
-***I will provide my final XML [here]() but make sure you are appropriately creating these entries relative to your hardwares topology. I have a 12 core 24 thread cpu and some sections will not look the same for you.***
+***I will provide my final XML [here](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Scripts/POP_TO_Windows_XML.xml) but make sure you are appropriately creating these entries relative to your hardwares topology. I have a 12 core 24 thread cpu and some sections will not look the same for you.***
+
+If you are pulling my XML do NOT just copy my config and put it into your XML spot. It will 90% not work unless you are using the same hardware that I am using and even then there may be incompatibility with your topology versus mine. You have been warned.
 
 Boot into your VM and double check the drivers. Make sure everything is working correctly. 
 
