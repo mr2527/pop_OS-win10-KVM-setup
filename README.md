@@ -199,7 +199,7 @@ Since this project is a KVM for Windows 10, you are required to download and use
 3. (***MANDATORY***) Download Windows 10 ISO files
 Since we are going to be creating a *Windows* kvm, you need the ISO for it. [Get the latest Windows 10 ISO here](https://www.microsoft.com/en-us/software-download/windows10ISO). Without the ISO you will not be able to boot the VM into Windows.
 
-4. (***OPTIONAL***):
+4. (***OPTIONAL***): Preparing an AMD GPU for Host Machine
 
 <h4 name="AMD_optional">
   If you own an AMD graphics card as host:
