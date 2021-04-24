@@ -910,6 +910,45 @@ The best fix that I encountered for getting the best audio out of the VM is usin
 
 **NOTE: I did find that turning off the USB power management settings actually helped my USB device pass through from turning off and disconnecting from the VM. Worked great and I have not had a single problem since.**
  
+At this point (4/23/21) this works functionally as a proper near bare-metal-performance Windows 10 machine. It can play everything just fine considering I passed 16gb, 12 cores and my RTX 3070. I encounter some general Windows 10 problems here and there. If you encounter something extraordinarly strange it may be in your best interest to start breaking down the problem into some type of hierarchy. I will provide you with my breakdown of how I problem solved my harder complications.
 
+1. Recogize the problem.
 
+If you don't understand exactly what the problem is then that may cause a larger block of figuring out a solution. But honestly, sometimes the end-user just does not know what to do and that is okay. It happens to everyone and myself. So in the instance that you have a problem that you just do not know what to do then consider skipping this and moving onto the other steps.
 
+2. Check for a Windows update (CONTROVERSIAL!)
+
+So a Windows update ***MIGHT*** fix the problem or it might cause even more. In this case be prepared to make a backup, snapshot, ISO, whatever you want to preserve your data in the case of further complications.
+
+3. Check for drivers. 
+
+This is a no-brainer. Just check to see if there's a driver that may be causing wonky compatability issues. This fixed some problems I had.
+
+4. For larger problems such as the Audio / SSD problems.
+
+START by checking your XML and general KVM setup. Is there an incorrect setting? Is there wrong topology? There can be plenty of problems here. If you have done some research by going to various websites or checking plenty of online boards then it may be time to consider moving to the next step.
+
+5. BIOS updates.
+
+***BE CAREFUL HERE*** - If you are going to update a BIOS it may be a good habit to write down your current problems. This will help in the instance of a BIOS update or BIOS setting causing more problems than solving. This was my problem with the SSD's dropping their connection. My ***STABLE*** BIOS update provided by the manufacturer caused my SSD to drop connection for an unknown reason. I did not change any settings aside from updating the BIOS to the newest BETA version and this fixed ALL of my disconnect problems. If you do not know how to flash a BIOS, watch a video or read your motherboards manual.
+
+6. Check your hardware.
+
+If you tried everything that you can think of and ensured that your XML is perfect, your drivers are fine, your updates are fine, etc, then it may be time to consider checking out your hardware. Test the basics like removing and placing back in your GPU, CPU, RAM, etc. It may also be a PSU not being able to handle multiple GPUs. There is a TON that can be at play once your reach this stage. A great way to test hardware though is to check in a different system if you have access to one. Best of luck.
+
+_______________________________________________________________________________________________________________________
+DANGER ZONE: You need to be pretty desparate to attempt these changes as it could cause problems if you do not know what you're doing...
+
+7. Reinstall Pop!
+
+Pretty straight forward and pretty annoying to deal with. Timeshift is your friend in cases like this though.
+
+8. Reinstall QEMU / Virt-Manager / your KVM
+
+Honestly this is the last thing anyone wants to do but I have had to do it and it sucks but honestly sometimes it is just the right thing to do to get a fresh install of something. Follow the instruction again and try your best! There is no shame in starting over.
+
+9. Trying a different Linux Distro
+
+10. Drop the KVM and install a dual boot to windows.
+
+This is an entirely valid fix as well. Do not feel like you are required to learn how to use and run a KVM just because you are on Linux. Never feel bad about using an OS. There is a learning curve to everything and some get it faster than others. You are not a failure. I have considered doing this when I couldn't find solutions to my problems. But it is so satisfying to find the fix and apply them. Keep at it, no one will judge you.
