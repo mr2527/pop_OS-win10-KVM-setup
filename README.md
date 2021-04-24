@@ -46,6 +46,8 @@ LAST UPDATE: 4/23/21 9:00 PM EST - added XML file
     * [Audio Issues? Here's a Bandaid Fix](#FIX1)
     * [Audio Issues, Still? Here's a Permanent Fix](#FIX2)
     * [HDD or SSD Passthrough Disconnecting? - Potential Fix](#FIX3)
+    * [General Troubleshooting](#FIX4)
+
 
 <h1 name="preface">
   PREFACE:
@@ -910,9 +912,15 @@ The best fix that I encountered for getting the best audio out of the VM is usin
 
 **NOTE: I did find that turning off the USB power management settings actually helped my USB device pass through from turning off and disconnecting from the VM. Worked great and I have not had a single problem since.**
  
-At this point (4/23/21) this works functionally as a proper near bare-metal-performance Windows 10 machine. It can play everything just fine considering I passed 16gb, 12 cores and my RTX 3070. I encounter some general Windows 10 problems here and there. If you encounter something extraordinarly strange it may be in your best interest to start breaking down the problem into some type of hierarchy. I will provide you with my breakdown of how I problem solved my harder complications.
+At this point (4/23/21) this works functionally as a proper near bare-metal-performance Windows 10 machine. It can play everything just fine considering I passed 16gb, 12 cores and my RTX 3070.
 
-1. Recogize the problem.
+I encounter some general Windows 10 problems here and there. If you encounter something extraordinarly strange it may be in your best interest to start breaking down the problem into some type of hierarchy. I will provide you with my breakdown of how I problem solved my harder complications.
+
+ <h3 name="FIX4">
+  General Troubleshooting
+ </h3>
+ 
+1. Recognize the problem.
 
 If you don't understand exactly what the problem is then that may cause a larger block of figuring out a solution. But honestly, sometimes the end-user just does not know what to do and that is okay. It happens to everyone and myself. So in the instance that you have a problem that you just do not know what to do then consider skipping this and moving onto the other steps.
 
@@ -922,7 +930,7 @@ So a Windows update ***MIGHT*** fix the problem or it might cause even more. In 
 
 3. Check for drivers. 
 
-This is a no-brainer. Just check to see if there's a driver that may be causing wonky compatability issues. This fixed some problems I had.
+This is a no-brainer. Just check to see if there's a driver that may be causing wonky compatibility issues. This fixed some problems I had.
 
 4. For larger problems such as the Audio / SSD problems.
 
@@ -934,10 +942,10 @@ START by checking your XML and general KVM setup. Is there an incorrect setting?
 
 6. Check your hardware.
 
-If you tried everything that you can think of and ensured that your XML is perfect, your drivers are fine, your updates are fine, etc, then it may be time to consider checking out your hardware. Test the basics like removing and placing back in your GPU, CPU, RAM, etc. It may also be a PSU not being able to handle multiple GPUs. There is a TON that can be at play once your reach this stage. A great way to test hardware though is to check in a different system if you have access to one. Best of luck.
+If you tried everything that you can think of and ensured that your XML is perfect, your drivers are fine, your updates are fine, etc, then it may be time to consider checking out your hardware. Test the basics like removing and placing back in your GPU, CPU, RAM, etc. It may also be a PSU not being able to handle multiple GPUs. There is a TON that can be at play once you reach this stage. A great way to test hardware though is to check in a different system if you have access to one. Best of luck.
 
 _______________________________________________________________________________________________________________________
-DANGER ZONE: You need to be pretty desparate to attempt these changes as it could cause problems if you do not know what you're doing...
+DANGER ZONE: You need to be pretty desperate to attempt these changes as it could cause problems if you do not know what you're doing...
 
 7. Reinstall Pop!
 
@@ -945,10 +953,12 @@ Pretty straight forward and pretty annoying to deal with. Timeshift is your frie
 
 8. Reinstall QEMU / Virt-Manager / your KVM
 
-Honestly this is the last thing anyone wants to do but I have had to do it and it sucks but honestly sometimes it is just the right thing to do to get a fresh install of something. Follow the instruction again and try your best! There is no shame in starting over.
+Honestly this is the last thing anyone wants to do but I have had to do it and it sucks but honestly sometimes it is just the right thing to do to get a fresh install of something. Follow the instructions again and try your best! There is no shame in starting over.
 
 9. Trying a different Linux Distro
 
 10. Drop the KVM and install a dual boot to windows.
 
 This is an entirely valid fix as well. Do not feel like you are required to learn how to use and run a KVM just because you are on Linux. Never feel bad about using an OS. There is a learning curve to everything and some get it faster than others. You are not a failure. I have considered doing this when I couldn't find solutions to my problems. But it is so satisfying to find the fix and apply them. Keep at it, no one will judge you.
+
+
