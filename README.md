@@ -862,6 +862,9 @@ It's totally random and impossible to predict."
 
 This got my brain jogging. I had searched for hours/days about potential fixes that did not do anything for me. I reinstalled my VM, cloned different VMS tried different boot options, different passthrough options and none of those fixes worked except this (***PLEASE NOTE:*** Although this worked for me ***IT MAY NOT WORK FOR YOU*** please consider trying everything before throwing in the towel. I understand how frustrating this can be as it happened to myself. With patience and persistence you may find the answer that you are looking for.)
 
+
+11/05/21 - I've tested this configuration and reinstallation on the 21.04 update and did not run into any complications with the installation process. I did however notice that there was some performance degredation but I figured out it was due to being on an older BIOS version. Once I updated it was a better experience. Consistent performance, no crashing. I still use Scream to get audio through since I dont have enough space for a dedicated onboard DAC. It works good for what it's worth. Free, slightly annoying to set up. But it works. 
+
 <h2 name="fix">
   The Fix:
  </h2>
