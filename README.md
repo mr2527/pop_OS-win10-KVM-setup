@@ -5,7 +5,9 @@ THIS IS NOW A **COMPLETED** GUIDE. I will be providing periodic changes, updates
 
 ***I would like to provide thanks to Noah, Isaiah and Joey for taking the time out of their day to gloss over this document and aid me in the creation of this repo.***  
 
-LAST UPDATE: 4/23/21 9:00 PM EST - added XML file
+Nov-5-21 This still works on Pop 21.04.
+
+LAST UPDATE: 11/05/21 11:42 am EST - updated readme
 
 <h2>
     Table of Contents:
