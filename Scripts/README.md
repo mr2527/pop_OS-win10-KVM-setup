@@ -15,9 +15,9 @@ hwloc
 # Update / Upgrade Pop (in this order)
 
 ```bash
-sudo apt install update
+sudo apt update
 
-sudo apt install upgrade
+sudo apt upgrade
 ```
 
 # log into sudo
