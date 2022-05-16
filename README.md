@@ -260,12 +260,12 @@ If you use [GRUB2](https://help.ubuntu.com/community/Grub2), you can do it by go
 
 AMD:
 ```bash
-GRUB_CMDLINE_LINUX_DEFAULT="quiet splash intel_iommu=on"
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash amd_iommu=on"
 ```
 
 Intel:
 ```bash
-GRUB_CMDLINE_LINUX_DEFAULT="quiet splash amd_iommu=on"
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash intel_iommu=on"
 ```
 
 As mentioned in [Bryan's guide](https://github.com/bryansteiner/gpu-passthrough-tutorial/blob/master/README.md), when planning the GPU passthrough setup, it was said to blacklist the NVIDIA/AMD drivers. {I don't think this has been mentioned yet in your own guide though} "The logic stems from the fact that since the native drivers can't attach to the GPU at boot-time, the GPU will be freed-up and available to bind to the vfio drivers instead." The tutorials will make you add a parameter called `pci-stub` with the PCI bus ID of the GPU you wish to use. I did not follow this approach and instead dynamically unbind the drivers and bind `VFIO-PCI` drivers to it. Alternatively, you can run this script to bind the `VFIO-PCI` drivers to the secondary card in your PC. But it is important to understand IOMMU groupings. The script provided by [Bryan here](https://github.com/bryansteiner/gpu-passthrough-tutorial/blob/master/kvm/scripts/iommu.sh) is perfectly adequate for finding IOMMU groups, but I found [this script](https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Scripts/iommu2.sh) to be better.
