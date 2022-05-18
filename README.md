@@ -156,9 +156,9 @@ This will sign you into root.
 3. It is a confusing experience but I am sure you can get through it with some perseverance. Keep at it.
 
 
-4. I suggest installing [Tree](https://www.computerhope.com/unix/tree.htm) to see how directories are laid out in the terminal (useful later!):
+4. I suggest installing [tree](https://www.computerhope.com/unix/tree.htm) to see how directories are laid out in the terminal (useful later!):
 ```bash
-$ sudo apt install Tree
+$ sudo apt install tree
 ```
 
 You can then run it simply by:
