@@ -441,7 +441,7 @@ You can now start [Virt-Manager](https://virt-manager.org/), you will be present
   <img width="600" height="600" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/virt1.png">
 </p>
 
-Click on the screen with a yellow light icon or navigate to `File > Add Connection`. You will be presented with this screen. Choose `Local install media (ISO image or CDROM)` and select `Forward`. You will then see:
+Click on the screen with a yellow light icon or navigate to `File > New Virtual Machine`. You will be presented with this screen. Choose `Local install media (ISO image or CDROM)` and select `Forward`. You will then see:
 
 <p align="center">
   <img width="600" height="600" src="https://github.com/mr2527/pop_OS-win10-KVM-setup/blob/main/Photos/virt2.png">
