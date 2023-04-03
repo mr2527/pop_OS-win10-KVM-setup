@@ -7,7 +7,9 @@ THIS IS NOW A **COMPLETED** GUIDE. I will be providing periodic changes, updates
 
 Nov-5-21 This still works on Pop 21.04.
 
-LAST UPDATE: 11/05/21 11:42 am EST - updated readme
+LAST UPDATE: 4/3/23 1:08 PM EST - Merged some PRs with grammar fixes. Thank you for thosee. 
+
+I would also like to personally thank every person who has viewed and used this guide in any capacity. I never thought something I made would help this much. Remember to also look at the guides that my own guide was inspired from below!
 
 <h2>
     Table of Contents:
